@@ -7,34 +7,50 @@ rule all:
         expand("arrows/{dataset}.arrow", dataset = DATASETS),
         expand("parsed_genomes/{dataset}_k31.fa", dataset = DATASETS),
         expand("eulertigs/{dataset}_k31_e.fa", dataset = DATASETS),
-        expand("indexes/sbwt/{dataset}.sbwt", dataset = DATASETS),
-        expand("indexes/sbwt/{dataset}.lcs", dataset = DATASETS),
-        expand("kmc/{dataset}_k25.kmc_pre", dataset = DATASETS),
-        expand("indexes/bqf/{dataset}.bqf", dataset = DATASETS),
-        expand("indexes/sshash/{dataset}.sshash", dataset = DATASETS),
+        expand("indexes/sbwt_rc/{dataset}.sbwt", dataset = DATASETS), #1st index
+        expand("indexes/sbwt_rc/{dataset}.lcs", dataset = DATASETS),
+        expand("indexes/sbwt_norc/{dataset}.sbwt", dataset = DATASETS),
+        expand("indexes/sbwt_norc/{dataset}.lcs", dataset = DATASETS),
+        expand("kmc/{dataset}_k25_can.kmc_pre", dataset = DATASETS),
+        expand("kmc/{dataset}_k25_noncan.kmc_pre", dataset = DATASETS),
+        expand("indexes/bqf_can/{dataset}.bqf", dataset = DATASETS),
+        expand("indexes/bqf_noncan/{dataset}.bqf", dataset = DATASETS),
+        expand("indexes/sshash_can/{dataset}.sshash", dataset = DATASETS),
+        expand("indexes/sshash_noncan/{dataset}.sshash", dataset = DATASETS),
         expand("indexes/sbb/{dataset}.bf.zst", dataset = DATASETS),
         expand("indexes/fmsi/{dataset}.msfa", dataset = DATASETS),
         expand("indexes/fmsi/{dataset}.msfa.fmsi.ac", dataset = DATASETS),
+        #expand("indexes/fmsi_dist/{dataset}.msfa", dataset = DATASETS),
+        #expand("indexes/fmsi_dist/{dataset}.msfa.fmsi.ac", dataset = DATASETS),
         expand("indexes/cbl/{dataset}.cbl", dataset = DATASETS),
         expand("indexes/fuze/{dataset}.mp", dataset = DATASETS),
         expand("indexes/swiss/{dataset}.mp", dataset = DATASETS),
         expand("indexes/kmindex/{dataset}_fof.txt", dataset = DATASETS),
         expand("indexes/sklib/{dataset}.sk", dataset = DATASETS),
-        expand("indexes/kmc/{dataset}_k31.kmc_pre", dataset = DATASETS),
-        expand("queries/{dataset}_pos.fa", dataset = DATASETS),
+        expand("indexes/kmc_can/{dataset}_k31.kmc_pre", dataset = DATASETS),
+        expand("indexes/kmc_noncan/{dataset}_k31.kmc_pre", dataset = DATASETS),
+        expand("queries/{dataset}_pos.fa", dataset = DATASETS), #sets of queries
         expand("queries/{dataset}_neg.fa", dataset = DATASETS),
         expand("queries/streaming/{dataset}_pos.fa", dataset = DATASETS),
         expand("queries/streaming/{dataset}_neg.fa", dataset = DATASETS),
-        expand("results/1/sbwt/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/1/sbwt/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/1/bqf/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/1/bqf/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/1/sshash/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/1/sshash/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/1/sbwt_rc/{dataset}_pos.txt", dataset = DATASETS), #single queries
+        expand("results/1/sbwt_rc/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/1/sbwt_norc/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/1/sbwt_norc/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/1/bqf_can/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/1/bqf_can/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/1/bqf_noncan/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/1/bqf_noncan/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/1/sshash_can/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/1/sshash_can/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/1/sshash_noncan/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/1/sshash_noncan/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/1/sbb/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/1/sbb/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/1/fmsi/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/1/fmsi/{dataset}_neg.txt", dataset = DATASETS),
+        #expand("results/1/fmsi_same/{dataset}_pos.txt", dataset = DATASETS),
+        #expand("results/1/fmsi_same/{dataset}_neg.txt", dataset = DATASETS),
+        #expand("results/1/fmsi_dist/{dataset}_pos.txt", dataset = DATASETS),
+        #expand("results/1/fmsi_dist/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/1/cbl/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/1/cbl/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/1/swiss/{dataset}_pos.txt", dataset = DATASETS),
@@ -45,16 +61,24 @@ rule all:
         expand("results/1/fuze/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/1/sklib/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/1/sklib/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/str/sbwt/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/str/sbwt/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/str/bqf/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/str/bqf/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/str/sshash/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/str/sshash/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/str/sbwt_rc/{dataset}_pos.txt", dataset = DATASETS), #streaming queries
+        expand("results/str/sbwt_rc/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/str/sbwt_norc/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/str/sbwt_norc/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/str/bqf_can/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/str/bqf_can/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/str/bqf_noncan/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/str/bqf_noncan/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/str/sshash_can/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/str/sshash_can/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/str/sshash_noncan/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/str/sshash_noncan/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/str/sbb/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/str/sbb/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/str/fmsi/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/str/fmsi/{dataset}_neg.txt", dataset = DATASETS),
+        #expand("results/str/fmsi_same/{dataset}_pos.txt", dataset = DATASETS),
+        #expand("results/str/fmsi_same/{dataset}_neg.txt", dataset = DATASETS),
+        #expand("results/str/fmsi_dist/{dataset}_pos.txt", dataset = DATASETS),
+        #expand("results/str/fmsi_dist/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/str/cbl/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/str/cbl/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/str/swiss/{dataset}_pos.txt", dataset = DATASETS),
@@ -65,21 +89,32 @@ rule all:
         expand("results/str/fuze/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/str/sklib/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/str/sklib/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/inter/sbwt/{combination}.txt", combination = COMBINATIONS),
+        expand("results/inter/sbwt_rc/{combination}.txt", combination = COMBINATIONS), #intersections
+        expand("results/inter/sbwt_norc/{combination}.txt", combination = COMBINATIONS),
         expand("results/inter/cbl/{combination}.txt", combination = COMBINATIONS),
         expand("results/inter/fmsi/{combination}.txt", combination = COMBINATIONS),
+        #expand("results/inter/fmsi_dist/{combination}.txt", combination = COMBINATIONS),
         expand("results/inter/sklib/{combination}.txt", combination = COMBINATIONS),
-        expand("results/inter/kmc/{combination}.txt", combination = COMBINATIONS),
-        expand("results/ram1/sbwt/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/ram1/sbwt/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/ram1/bqf/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/ram1/bqf/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/ram1/sshash/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/ram1/sshash/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/inter/kmc_can/{combination}.txt", combination = COMBINATIONS),
+        expand("results/inter/kmc_noncan/{combination}.txt", combination = COMBINATIONS),
+        expand("results/ram1/sbwt_rc/{dataset}_pos.txt", dataset = DATASETS), #ram single queries
+        expand("results/ram1/sbwt_rc/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ram1/sbwt_norc/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ram1/sbwt_norc/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ram1/bqf_can/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ram1/bqf_can/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ram1/bqf_noncan/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ram1/bqf_noncan/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ram1/sshash_can/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ram1/sshash_can/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ram1/sshash_noncan/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ram1/sshash_noncan/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/ram1/sbb/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/ram1/sbb/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/ram1/fmsi/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/ram1/fmsi/{dataset}_neg.txt", dataset = DATASETS),
+        #expand("results/ram1/fmsi_same/{dataset}_pos.txt", dataset = DATASETS),
+        #expand("results/ram1/fmsi_same/{dataset}_neg.txt", dataset = DATASETS),
+        #expand("results/ram1/fmsi_dist/{dataset}_pos.txt", dataset = DATASETS),
+        #expand("results/ram1/fmsi_dist/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/ram1/cbl/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/ram1/cbl/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/ram1/swiss/{dataset}_pos.txt", dataset = DATASETS),
@@ -90,16 +125,24 @@ rule all:
         expand("results/ram1/fuze/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/ram1/sklib/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/ram1/sklib/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/ramstr/sbwt/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/ramstr/sbwt/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/ramstr/bqf/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/ramstr/bqf/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/ramstr/sshash/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/ramstr/sshash/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ramstr/sbwt_rc/{dataset}_pos.txt", dataset = DATASETS), #ram streaming queries
+        expand("results/ramstr/sbwt_rc/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ramstr/sbwt_norc/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ramstr/sbwt_norc/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ramstr/bqf_can/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ramstr/bqf_can/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ramstr/bqf_noncan/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ramstr/bqf_noncan/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ramstr/sshash_can/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ramstr/sshash_can/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ramstr/sshash_noncan/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ramstr/sshash_noncan/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/ramstr/sbb/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/ramstr/sbb/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/ramstr/fmsi/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/ramstr/fmsi/{dataset}_neg.txt", dataset = DATASETS),
+        #expand("results/ramstr/fmsi_same/{dataset}_pos.txt", dataset = DATASETS),
+        #expand("results/ramstr/fmsi_same/{dataset}_neg.txt", dataset = DATASETS),
+        #expand("results/ramstr/fmsi_dist/{dataset}_pos.txt", dataset = DATASETS),
+        #expand("results/ramstr/fmsi_dist/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/ramstr/cbl/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/ramstr/cbl/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/ramstr/swiss/{dataset}_pos.txt", dataset = DATASETS),
@@ -110,11 +153,14 @@ rule all:
         expand("results/ramstr/fuze/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/ramstr/sklib/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/ramstr/sklib/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/raminter/sbwt/{combination}.txt", combination = COMBINATIONS),
+        expand("results/raminter/sbwt_rc/{combination}.txt", combination = COMBINATIONS), #ram intersection
+        expand("results/raminter/sbwt_norc/{combination}.txt", combination = COMBINATIONS),
         expand("results/raminter/cbl/{combination}.txt", combination = COMBINATIONS),
         expand("results/raminter/fmsi/{combination}.txt", combination = COMBINATIONS),
+        #expand("results/raminter/fmsi_dist/{combination}.txt", combination = COMBINATIONS),
         expand("results/raminter/sklib/{combination}.txt", combination = COMBINATIONS),
-        expand("results/raminter/kmc/{combination}.txt", combination = COMBINATIONS)
+        expand("results/raminter/kmc_can/{combination}.txt", combination = COMBINATIONS),
+        expand("results/raminter/kmc_noncan/{combination}.txt", combination = COMBINATIONS)
     output:
         "results/1/extractor1.py",
         "results/scatteR1.R"
@@ -154,40 +200,77 @@ rule eulertigs:
     shell:
         "ggcat build --eulertigs -k 31 -s 1 -o {output} {input}"
 
-rule index_sbwt:
+### INDEXES
+
+rule index_sbwt_rc:
     input:
         "eulertigs/{sample}_k31_e.fa"
     output:
-        "indexes/sbwt/{sample}.sbwt",
-        "indexes/sbwt/{sample}.lcs"
+        "indexes/sbwt_rc/{sample}.sbwt",
+        "indexes/sbwt_rc/{sample}.lcs"
     shell:
-        "./bench/sbwt-rs-cli/target/release/sbwt build -l -r -i {input} -o indexes/sbwt/{wildcards.sample} -k 31"
+        "./bench/sbwt-rs-cli/target/release/sbwt build -l -r -i {input} -o indexes/sbwt_rc/{wildcards.sample} -k 31"
 
-rule kmc:
+rule index_sbwt_norc:
     input:
         "eulertigs/{sample}_k31_e.fa"
     output:
-        "kmc/{sample}_k25.kmc_pre",
-        "kmc/{sample}_k25.kmc_suf",
+        "indexes/sbwt_norc/{sample}.sbwt",
+        "indexes/sbwt_norc/{sample}.lcs"
     shell:
-        "mkdir kmc/{wildcards.sample} && ./utils/kmc/bin/kmc -fm -k25 -ci1 {input} kmc/{wildcards.sample}_k25 kmc/{wildcards.sample}"
+        "./bench/sbwt-rs-cli/target/release/sbwt build -l -i {input} -o indexes/sbwt_norc/{wildcards.sample} -k 31"
 
-rule index_bqf:
-    input:
-        "kmc/{sample}_k25.kmc_pre",
-        "kmc/{sample}_k25.kmc_suf",
-    output:
-        "indexes/bqf/{sample}.bqf"
-    shell:
-        "./bench/bqf/build/bin/bqf build -i kmc/{wildcards.sample}_k25 -o {output} -k 31 -z 16"
-
-rule index_sshash:
+rule kmc_can:
     input:
         "eulertigs/{sample}_k31_e.fa"
     output:
-        "indexes/sshash/{sample}.sshash"
+        "kmc/{sample}_k25_can.kmc_pre",
+        "kmc/{sample}_k25_can.kmc_suf",
+    shell:
+        "mkdir kmc/{wildcards.sample}_can && ./utils/kmc/bin/kmc -fm -k25 -ci1 {input} kmc/{wildcards.sample}_k25_can kmc/{wildcards.sample}_can"
+
+rule kmc_noncan:
+    input:
+        "eulertigs/{sample}_k31_e.fa"
+    output:
+        "kmc/{sample}_k25_noncan.kmc_pre",
+        "kmc/{sample}_k25_noncan.kmc_suf",
+    shell:
+        "mkdir kmc/{wildcards.sample}_noncan && ./utils/kmc/bin/kmc -fm -b -k25 -ci1 {input} kmc/{wildcards.sample}_k25_noncan kmc/{wildcards.sample}_noncan"
+
+rule index_bqf_can:
+    input:
+        "kmc/{sample}_k25_can.kmc_pre",
+        "kmc/{sample}_k25_can.kmc_suf",
+    output:
+        "indexes/bqf_can/{sample}.bqf"
+    shell:
+        "./bench/bqf/build/bin/bqf build -i kmc/{wildcards.sample}_k25_can -o {output} -k 31 -z 16"
+
+rule index_bqf_noncan:
+    input:
+        "kmc/{sample}_k25_noncan.kmc_pre",
+        "kmc/{sample}_k25_noncan.kmc_suf",
+    output:
+        "indexes/bqf_noncan/{sample}.bqf"
+    shell:
+        "./bench/bqf/build/bin/bqf build -i kmc/{wildcards.sample}_k25_can -o {output} -k 31 -z 16"
+
+rule index_sshash_can:
+    input:
+        "eulertigs/{sample}_k31_e.fa"
+    output:
+        "indexes/sshash_can/{sample}.sshash"
     shell:
         "./bench/sshash/build/sshash build -i {input} -k 31 -m 10 -o {output} --canonical"
+
+rule index_sshash_noncan:
+    input:
+        "eulertigs/{sample}_k31_e.fa"
+    output:
+        "indexes/sshash_noncan/{sample}.sshash"
+    shell:
+        "./bench/sshash/build/sshash build -i {input} -k 31 -m 10 -o {output}"
 
 rule index_sbb:
     input:
@@ -205,6 +288,14 @@ rule kmercamel:
     shell:
         "./utils/kmercamel/kmercamel compute -S -k 31 -o {output} {input}"
 
+"""rule kmercamel_dist:
+    input:
+        "eulertigs/{sample}_k31_e.fa"
+    output:
+        "indexes/fmsi_dist/{sample}.msfa"
+    shell:
+        "./utils/kmercamel/kmercamel compute -u -S -k 31 -o {output} {input}"
+"""
 rule index_fmsi:
     input:
         "indexes/fmsi/{sample}.msfa"
@@ -212,7 +303,15 @@ rule index_fmsi:
         "indexes/fmsi/{sample}.msfa.fmsi.ac"
     shell:
         "./bench/fmsi/fmsi index -k 31 {input}"
-
+"""
+rule index_fmsi_dist:
+    input:
+        "indexes/fmsi_dist/{sample}.msfa"
+    output:
+        "indexes/fmsi_dist/{sample}.msfa.fmsi.ac"
+    shell:
+        "./bench/fmsi/fmsi index -k 31 {input}"
+"""
 rule index_cbl:
     input:
         "eulertigs/{sample}_k31_e.fa"
@@ -255,14 +354,26 @@ rule index_sklib:
     shell:
         "./bench/sklib/build/bin/sskm construct -f {input} -o {output} -k 31 -m 15"
 
-rule index_kmc:
+rule index_kmc_can:
     input:
         "eulertigs/{sample}_k31_e.fa"
     output:
-        "indexes/kmc/{sample}_k31.kmc_pre",
-        "indexes/kmc/{sample}_k31.kmc_suf"
+        "indexes/kmc_can/{sample}_k31.kmc_pre",
+        "indexes/kmc_can/{sample}_k31.kmc_suf"
     shell:
-        "mkdir -p indexes/kmc/{wildcards.sample} && ./utils/kmc/bin/kmc -fm -k31 -ci1 {input} indexes/kmc/{wildcards.sample}_k31 indexes/kmc/{wildcards.sample}"
+        "mkdir -p indexes/kmc_can/{wildcards.sample} && ./utils/kmc/bin/kmc -fm -k31 -ci1 {input} indexes/kmc_can/{wildcards.sample}_k31 indexes/kmc_can/{wildcards.sample}"
+
+rule index_kmc_noncan:
+    input:
+        "eulertigs/{sample}_k31_e.fa"
+    output:
+        "indexes/kmc_noncan/{sample}_k31.kmc_pre",
+        "indexes/kmc_noncan/{sample}_k31.kmc_suf"
+    shell:
+        "mkdir -p indexes/kmc_noncan/{wildcards.sample} && ./utils/kmc/bin/kmc -fm -b -k31 -ci1 {input} indexes/kmc_noncan/{wildcards.sample}_k31 indexes/kmc_noncan/{wildcards.sample}"
+
+### QUERY DATASETS
+
 rule pos_queries:
     input:
         "eulertigs/{sample}_k31_e.fa"
@@ -295,61 +406,121 @@ rule neg_streaming:
     shell:
         "utils/streaming_neg/target/release/streaming_neg -k 31 -o {output} -i {input} -n 100000"
 
-rule query_pos_sbwt:
+### SINGLE QUERIES
+
+rule query_pos_sbwt_rc:
     input:
-        sbwt = "indexes/sbwt/{sample}.sbwt",
+        sbwt = "indexes/sbwt_rc/{sample}.sbwt",
         query = "queries/{sample}_pos.fa"
     output:
-        out = "output/1/sbwt/{sample}_pos.txt",
-        res = "results/1/sbwt/{sample}_pos.txt"
+        out = "output/1/sbwt_rc/{sample}_pos.txt",
+        res = "results/1/sbwt_rc/{sample}_pos.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/sbwt-rs-cli/target/release/sbwt lookup -i {input.sbwt} -o {output.out} -q {input.query} -t 1 -b ) 2>> {output.res}; done"
 
-rule query_neg_sbwt:
+rule query_neg_sbwt_rc:
     input:
-        sbwt = "indexes/sbwt/{sample}.sbwt",
+        sbwt = "indexes/sbwt_rc/{sample}.sbwt",
         query = "queries/{sample}_neg.fa"
     output:
-        out = "output/1/sbwt/{sample}_neg.txt",
-        res = "results/1/sbwt/{sample}_neg.txt"
+        out = "output/1/sbwt_rc/{sample}_neg.txt",
+        res = "results/1/sbwt_rc/{sample}_neg.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/sbwt-rs-cli/target/release/sbwt lookup -i {input.sbwt} -o {output.out} -q {input.query} -t 1 -b ) 2>> {output.res}; done"
 
-rule query_pos_bqf:
+rule query_pos_sbwt_norc:
     input:
-        bqf = "indexes/bqf/{sample}.bqf",
+        sbwt = "indexes/sbwt_norc/{sample}.sbwt",
         query = "queries/{sample}_pos.fa"
     output:
-        out = "output/1/bqf/{sample}_pos.txt",
-        res = "results/1/bqf/{sample}_pos.txt"
+        out = "output/1/sbwt_norc/{sample}_pos.txt",
+        res = "results/1/sbwt_norc/{sample}_pos.txt"
     shell:
-        "for loop in {{0..9}}; do ( time ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
+        "for loop in {{0..9}}; do ( time ./bench/sbwt-rs-cli/target/release/sbwt lookup -i {input.sbwt} -o {output.out} -q {input.query} -t 1 -b ) 2>> {output.res}; done"
 
-rule query_neg_bqf:
+rule query_neg_sbwt_norc:
     input:
-        bqf = "indexes/bqf/{sample}.bqf",
+        sbwt = "indexes/sbwt_norc/{sample}.sbwt",
         query = "queries/{sample}_neg.fa"
     output:
-        out = "output/1/bqf/{sample}_neg.txt",
-        res = "results/1/bqf/{sample}_neg.txt"
+        out = "output/1/sbwt_norc/{sample}_neg.txt",
+        res = "results/1/sbwt_norc/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/sbwt-rs-cli/target/release/sbwt lookup -i {input.sbwt} -o {output.out} -q {input.query} -t 1 -b ) 2>> {output.res}; done"
+
+rule query_pos_bqf_can:
+    input:
+        bqf = "indexes/bqf_can/{sample}.bqf",
+        query = "queries/{sample}_pos.fa"
+    output:
+        out = "output/1/bqf_can/{sample}_pos.txt",
+        res = "results/1/bqf_can/{sample}_pos.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
 
-rule query_pos_sshash:
+rule query_neg_bqf_can:
     input:
-        sshash = "indexes/sshash/{sample}.sshash",
+        bqf = "indexes/bqf_can/{sample}.bqf",
+        query = "queries/{sample}_neg.fa"
+    output:
+        out = "output/1/bqf_can/{sample}_neg.txt",
+        res = "results/1/bqf_can/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
+
+rule query_pos_bqf_noncan:
+    input:
+        bqf = "indexes/bqf_noncan/{sample}.bqf",
         query = "queries/{sample}_pos.fa"
     output:
-        "results/1/sshash/{sample}_pos.txt"
+        out = "output/1/bqf_noncan/{sample}_pos.txt",
+        res = "results/1/bqf_noncan/{sample}_pos.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
+
+rule query_neg_bqf_noncan:
+    input:
+        bqf = "indexes/bqf_noncan/{sample}.bqf",
+        query = "queries/{sample}_neg.fa"
+    output:
+        out = "output/1/bqf_noncan/{sample}_neg.txt",
+        res = "results/1/bqf_noncan/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
+
+rule query_pos_sshash_can:
+    input:
+        sshash = "indexes/sshash_can/{sample}.sshash",
+        query = "queries/{sample}_pos.fa"
+    output:
+        "results/1/sshash_can/{sample}_pos.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/sshash/build/sshash query -i {input.sshash} -q {input.query} ) 2>> {output}; done"
 
-rule query_neg_sshash:
+rule query_neg_sshash_can:
     input:
-        sshash = "indexes/sshash/{sample}.sshash",
+        sshash = "indexes/sshash_can/{sample}.sshash",
         query = "queries/{sample}_neg.fa"
     output:
-        "results/1/sshash/{sample}_neg.txt"
+        "results/1/sshash_can/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/sshash/build/sshash query -i {input.sshash} -q {input.query} ) 2>> {output}; done"
+
+rule query_pos_sshash_noncan:
+    input:
+        sshash = "indexes/sshash_noncan/{sample}.sshash",
+        query = "queries/{sample}_pos.fa"
+    output:
+        "results/1/sshash_noncan/{sample}_pos.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/sshash/build/sshash query -i {input.sshash} -q {input.query} ) 2>> {output}; done"
+
+rule query_neg_sshash_noncan:
+    input:
+        sshash = "indexes/sshash_noncan/{sample}.sshash",
+        query = "queries/{sample}_neg.fa"
+    output:
+        "results/1/sshash_noncan/{sample}_neg.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/sshash/build/sshash query -i {input.sshash} -q {input.query} ) 2>> {output}; done"
 
@@ -371,24 +542,42 @@ rule query_neg_sbb:
     shell:
         "mkdir -p ./output/1/sbb && for loop in {{0..9}}; do ( time ./bench/SBB/target/release/sbb recruit -p output/1/sbb/{wildcards.sample}_neg -f {input.sbb} --fa {input.query} -t 1 ) 2>> {output}; done"
 
-rule query_pos_fmsi:
+"""rule query_pos_fmsi_same:
     input:
-        fmsi = "indexes/fmsi/{sample}.msfa.fmsi.ac",
+        fmsi = "indexes/fmsi_same/{sample}.msfa.fmsi.ac",
         query = "queries/{sample}_pos.fa"
     output:
-        "results/1/fmsi/{sample}_pos.txt"
+        "results/1/fmsi_same/{sample}_pos.txt"
     shell:
-        "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi/{wildcards.sample}.msfa ) 2>> {output}; done"
+        "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_same/{wildcards.sample}.msfa ) 2>> {output}; done"
 
-rule query_neg_fmsi:
+rule query_neg_fmsi_same:
     input:
-        fmsi = "indexes/fmsi/{sample}.msfa.fmsi.ac",
+        fmsi = "indexes/fmsi_same/{sample}.msfa.fmsi.ac",
         query = "queries/{sample}_neg.fa"
     output:
-        "results/1/fmsi/{sample}_neg.txt"
+        "results/1/fmsi_same/{sample}_neg.txt"
     shell:
-        "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi/{wildcards.sample}.msfa ) 2>> {output}; done"
+        "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_same/{wildcards.sample}.msfa ) 2>> {output}; done"
 
+rule query_pos_fmsi_dist:
+    input:
+        fmsi = "indexes/fmsi_dist/{sample}.msfa.fmsi.ac",
+        query = "queries/{sample}_pos.fa"
+    output:
+        "results/1/fmsi_dist/{sample}_pos.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_dist/{wildcards.sample}.msfa ) 2>> {output}; done"
+
+rule query_neg_fmsi_dist:
+    input:
+        fmsi = "indexes/fmsi_dist/{sample}.msfa.fmsi.ac",
+        query = "queries/{sample}_neg.fa"
+    output:
+        "results/1/fmsi_dist/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_dist/{wildcards.sample}.msfa ) 2>> {output}; done"
+"""
 rule query_pos_cbl:
     input:
         cbl = "indexes/cbl/{sample}.cbl",
@@ -485,61 +674,121 @@ rule query_neg_sklib:
     shell:
         "for loop in {{0..9}}; do ( time ./bench/sklib/build/bin/sskm query -l {input.sklib} -i {input.query} -o {output.out} -t 1 ) 2>> {output.res}; done"  
 
-rule query_str_pos_sbwt:
+### STREAMING QUERIES
+
+rule query_str_pos_sbwt_rc:
     input:
-        sbwt = "indexes/sbwt/{sample}.sbwt",
+        sbwt = "indexes/sbwt_rc/{sample}.sbwt",
         query = "queries/streaming/{sample}_pos.fa"
     output:
-        out = "output/str/sbwt/{sample}_pos.txt",
-        res = "results/str/sbwt/{sample}_pos.txt"
+        out = "output/str/sbwt_rc/{sample}_pos.txt",
+        res = "results/str/sbwt_rc/{sample}_pos.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/sbwt-rs-cli/target/release/sbwt lookup -i {input.sbwt} -o {output.out} -q {input.query} -t 1 -b ) 2>> {output.res}; done"
 
-rule query_str_neg_sbwt:
+rule query_str_neg_sbwt_rc:
     input:
-        sbwt = "indexes/sbwt/{sample}.sbwt",
+        sbwt = "indexes/sbwt_rc/{sample}.sbwt",
         query = "queries/streaming/{sample}_neg.fa"
     output:
-        out = "output/str/sbwt/{sample}_neg.txt",
-        res = "results/str/sbwt/{sample}_neg.txt"
+        out = "output/str/sbwt_rc/{sample}_neg.txt",
+        res = "results/str/sbwt_rc/{sample}_neg.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/sbwt-rs-cli/target/release/sbwt lookup -i {input.sbwt} -o {output.out} -q {input.query} -t 1 -b ) 2>> {output.res}; done"
 
-rule query_str_pos_bqf:
+rule query_str_pos_sbwt_norc:
     input:
-        bqf = "indexes/bqf/{sample}.bqf",
+        sbwt = "indexes/sbwt_norc/{sample}.sbwt",
         query = "queries/streaming/{sample}_pos.fa"
     output:
-        out = "output/str/bqf/{sample}_pos.txt",
-        res = "results/str/bqf/{sample}_pos.txt"
+        out = "output/str/sbwt_norc/{sample}_pos.txt",
+        res = "results/str/sbwt_norc/{sample}_pos.txt"
     shell:
-        "for loop in {{0..9}}; do ( time ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
+        "for loop in {{0..9}}; do ( time ./bench/sbwt-rs-cli/target/release/sbwt lookup -i {input.sbwt} -o {output.out} -q {input.query} -t 1 -b ) 2>> {output.res}; done"
 
-rule query_str_neg_bqf:
+rule query_str_neg_sbwt_norc:
     input:
-        bqf = "indexes/bqf/{sample}.bqf",
+        sbwt = "indexes/sbwt_norc/{sample}.sbwt",
         query = "queries/streaming/{sample}_neg.fa"
     output:
-        out = "output/str/bqf/{sample}_neg.txt",
-        res = "results/str/bqf/{sample}_neg.txt"
+        out = "output/str/sbwt_norc/{sample}_neg.txt",
+        res = "results/str/sbwt_norc/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/sbwt-rs-cli/target/release/sbwt lookup -i {input.sbwt} -o {output.out} -q {input.query} -t 1 -b ) 2>> {output.res}; done"
+
+rule query_str_pos_bqf_can:
+    input:
+        bqf = "indexes/bqf_can/{sample}.bqf",
+        query = "queries/streaming/{sample}_pos.fa"
+    output:
+        out = "output/str/bqf_can/{sample}_pos.txt",
+        res = "results/str/bqf_can/{sample}_pos.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
 
-rule query_str_pos_sshash:
+rule query_str_neg_bqf_can:
     input:
-        sshash = "indexes/sshash/{sample}.sshash",
+        bqf = "indexes/bqf_can/{sample}.bqf",
+        query = "queries/streaming/{sample}_neg.fa"
+    output:
+        out = "output/str/bqf_can/{sample}_neg.txt",
+        res = "results/str/bqf_can/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
+
+rule query_str_pos_bqf_noncan:
+    input:
+        bqf = "indexes/bqf_noncan/{sample}.bqf",
         query = "queries/streaming/{sample}_pos.fa"
     output:
-        "results/str/sshash/{sample}_pos.txt"
+        out = "output/str/bqf_noncan/{sample}_pos.txt",
+        res = "results/str/bqf_noncan/{sample}_pos.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
+
+rule query_str_neg_bqf_noncan:
+    input:
+        bqf = "indexes/bqf_noncan/{sample}.bqf",
+        query = "queries/streaming/{sample}_neg.fa"
+    output:
+        out = "output/str/bqf_noncan/{sample}_neg.txt",
+        res = "results/str/bqf_noncan/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
+
+rule query_str_pos_sshash_can:
+    input:
+        sshash = "indexes/sshash_can/{sample}.sshash",
+        query = "queries/streaming/{sample}_pos.fa"
+    output:
+        "results/str/sshash_can/{sample}_pos.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/sshash/build/sshash query -i {input.sshash} -q {input.query} ) 2>> {output}; done"
 
-rule query_str_neg_sshash:
+rule query_str_neg_sshash_can:
     input:
-        sshash = "indexes/sshash/{sample}.sshash",
+        sshash = "indexes/sshash_can/{sample}.sshash",
         query = "queries/streaming/{sample}_neg.fa"
     output:
-        "results/str/sshash/{sample}_neg.txt"
+        "results/str/sshash_can/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/sshash/build/sshash query -i {input.sshash} -q {input.query} ) 2>> {output}; done"
+
+rule query_str_pos_sshash_noncan:
+    input:
+        sshash = "indexes/sshash_noncan/{sample}.sshash",
+        query = "queries/streaming/{sample}_pos.fa"
+    output:
+        "results/str/sshash_noncan/{sample}_pos.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/sshash/build/sshash query -i {input.sshash} -q {input.query} ) 2>> {output}; done"
+
+rule query_str_neg_sshash_noncan:
+    input:
+        sshash = "indexes/sshash_noncan/{sample}.sshash",
+        query = "queries/streaming/{sample}_neg.fa"
+    output:
+        "results/str/sshash_noncan/{sample}_neg.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/sshash/build/sshash query -i {input.sshash} -q {input.query} ) 2>> {output}; done"
 
@@ -560,25 +809,43 @@ rule query_str_neg_sbb:
         "results/str/sbb/{sample}_neg.txt"
     shell:
         "mkdir -p ./output/str/sbb && for loop in {{0..9}}; do ( time ./bench/SBB/target/release/sbb recruit -p output/str/sbb/{wildcards.sample}_neg -f {input.sbb} --fa {input.query} -t 1 ) 2>> {output}; done"
-
-rule query_str_pos_fmsi:
+"""
+rule query_str_pos_fmsi_same:
     input:
-        fmsi = "indexes/fmsi/{sample}.msfa.fmsi.ac",
+        fmsi = "indexes/fmsi_same/{sample}.msfa.fmsi.ac",
         query = "queries/streaming/{sample}_pos.fa"
     output:
-        "results/str/fmsi/{sample}_pos.txt"
+        "results/str/fmsi_same/{sample}_pos.txt"
     shell:
-        "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi/{wildcards.sample}.msfa ) 2>> {output}; done"
+        "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_same/{wildcards.sample}.msfa ) 2>> {output}; done"
 
-rule query_str_neg_fmsi:
+rule query_str_neg_fmsi_same:
     input:
-        fmsi = "indexes/fmsi/{sample}.msfa.fmsi.ac",
+        fmsi = "indexes/fmsi_same/{sample}.msfa.fmsi.ac",
         query = "queries/streaming/{sample}_neg.fa"
     output:
-        "results/str/fmsi/{sample}_neg.txt"
+        "results/str/fmsi_same/{sample}_neg.txt"
     shell:
-        "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi/{wildcards.sample}.msfa ) 2>> {output}; done"
+        "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_same/{wildcards.sample}.msfa ) 2>> {output}; done"
 
+rule query_str_pos_fmsi_dist:
+    input:
+        fmsi = "indexes/fmsi_dist/{sample}.msfa.fmsi.ac",
+        query = "queries/streaming/{sample}_pos.fa"
+    output:
+        "results/str/fmsi_dist/{sample}_pos.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_dist/{wildcards.sample}.msfa ) 2>> {output}; done"
+
+rule query_str_neg_fmsi_dist:
+    input:
+        fmsi = "indexes/fmsi_dist/{sample}.msfa.fmsi.ac",
+        query = "queries/streaming/{sample}_neg.fa"
+    output:
+        "results/str/fmsi_dist/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_dist/{wildcards.sample}.msfa ) 2>> {output}; done"
+"""
 rule query_str_pos_cbl:
     input:
         cbl = "indexes/cbl/{sample}.cbl",
@@ -675,15 +942,27 @@ rule query_str_neg_sklib:
     shell:
         "for loop in {{0..9}}; do ( time ./bench/sklib/build/bin/sskm query -l {input.sklib} -i {input.query} -o {output.out} -t 1 ) 2>> {output.res}; done"  
 
-rule inter_sbwt:
+### INTERSECTIONS
+
+rule inter_sbwt_rc:
     input:
-        sbwt1 = "indexes/sbwt/{index1}.sbwt",
-        sbwt2 = "indexes/sbwt/{index2}.sbwt"
+        sbwt1 = "indexes/sbwt_rc/{index1}.sbwt",
+        sbwt2 = "indexes/sbwt_rc/{index2}.sbwt"
     output:
-        out = "output/inter/sbwt/{index1}:{index2}.sbwt",
-        res = "results/inter/sbwt/{index1}:{index2}.txt"
+        out = "output/inter/sbwt_rc/{index1}:{index2}.sbwt",
+        res = "results/inter/sbwt_rc/{index1}:{index2}.txt"
     shell:
-        "for loop in {{0..9}}; do ( time ./bench/sbwt-rs-cli/target/release/sbwt intersect -t 1 -o output/inter/sbwt/{wildcards.index1}:{wildcards.index2}.sbwt {input.sbwt1} {input.sbwt2} ) 2>> {output.res}; done"
+        "for loop in {{0..9}}; do ( time ./bench/sbwt-rs-cli/target/release/sbwt intersect -t 1 -o output/inter/sbwt_rc/{wildcards.index1}:{wildcards.index2}.sbwt {input.sbwt1} {input.sbwt2} ) 2>> {output.res}; done"
+
+rule inter_sbwt_norc:
+    input:
+        sbwt1 = "indexes/sbwt_norc/{index1}.sbwt",
+        sbwt2 = "indexes/sbwt_norc/{index2}.sbwt"
+    output:
+        out = "output/inter/sbwt_norc/{index1}:{index2}.sbwt",
+        res = "results/inter/sbwt_norc/{index1}:{index2}.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/sbwt-rs-cli/target/release/sbwt intersect -t 1 -o output/inter/sbwt_norc/{wildcards.index1}:{wildcards.index2}.sbwt {input.sbwt1} {input.sbwt2} ) 2>> {output.res}; done"
 
 rule inter_cbl:
     input:
@@ -704,7 +983,17 @@ rule inter_fmsi:
         res = "results/inter/fmsi/{index1}:{index2}.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi inter -r output/inter/fmsi/{wildcards.index1}:{wildcards.index2} -p {input.fmsi1} -p {input.fmsi2} -k 31 ) 2>> {output.res}; done"
-
+"""
+rule inter_fmsi_dist:
+    input:
+        fmsi1 = "indexes/fmsi_dist/{index1}.msfa",
+        fmsi2 = "indexes/fmsi_dist/{index2}.msfa"
+    output:
+        out = "output/inter/fmsi_dist/{index1}:{index2}.fmsi.ac",
+        res = "results/inter/fmsi_dist/{index1}:{index2}.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi inter -r output/inter/fmsi_dist/{wildcards.index1}:{wildcards.index2} -p {input.fmsi1} -p {input.fmsi2} -k 31 ) 2>> {output.res}; done"
+"""
 rule inter_sklib:
     input:
         skl1 = "indexes/sklib/{index1}.sk",
@@ -715,71 +1004,142 @@ rule inter_sklib:
     shell:
         "for loop in {{0..9}}; do ( time ./bench/sklib/build/bin/sskm setop -o {output.out} -a {input.skl1} -b {input.skl2} --op intersection ) 2>> {output.res}; done"
 
-rule inter_kmc:
+rule inter_kmc_can:
     input:
-        kmc1 = "indexes/kmc/{index1}_k31.kmc_pre",
-        kmc2 = "indexes/kmc/{index2}_k31.kmc_pre"
+        kmc1 = "indexes/kmc_can/{index1}_k31.kmc_pre",
+        kmc2 = "indexes/kmc_can/{index2}_k31.kmc_pre"
     output:
-        out = "output/inter/kmc/{index1}:{index2}.kmc_pre",
-        res = "results/inter/kmc/{index1}:{index2}.txt"
+        out = "output/inter/kmc_can/{index1}:{index2}.kmc_pre",
+        res = "results/inter/kmc_can/{index1}:{index2}.txt"
     shell:
-        "mkdir -p results/inter/kmc && for loop in {{0..9}}; do ( time ./utils/kmc/bin/kmc_tools -t1 simple ./indexes/kmc/{wildcards.index1}_k31 ./indexes/kmc/{wildcards.index2}_k31 intersect output/inter/kmc/{wildcards.index1}:{wildcards.index2} ) 2>> {output.res}; done"
+        "mkdir -p results/inter/kmc_can && for loop in {{0..9}}; do ( time ./utils/kmc/bin/kmc_tools -t1 simple ./indexes/kmc_can/{wildcards.index1}_k31 ./indexes/kmc_can/{wildcards.index2}_k31 intersect output/inter/kmc_can/{wildcards.index1}:{wildcards.index2} ) 2>> {output.res}; done"
 
-rule query_pos_sbwt_ram:
+rule inter_kmc_noncan:
     input:
-        sbwt = "indexes/sbwt/{sample}.sbwt",
+        kmc1 = "indexes/kmc_noncan/{index1}_k31.kmc_pre",
+        kmc2 = "indexes/kmc_noncan/{index2}_k31.kmc_pre"
+    output:
+        out = "output/inter/kmc_noncan/{index1}:{index2}.kmc_pre",
+        res = "results/inter/kmc_noncan/{index1}:{index2}.txt"
+    shell:
+        "mkdir -p results/inter/kmc_noncan && for loop in {{0..9}}; do ( time ./utils/kmc/bin/kmc_tools -t1 simple ./indexes/kmc_noncan/{wildcards.index1}_k31 ./indexes/kmc_noncan/{wildcards.index2}_k31 intersect output/inter/kmc_noncan/{wildcards.index1}:{wildcards.index2} ) 2>> {output.res}; done"
+
+
+### RAM SINGLE QUERIES
+
+rule query_pos_sbwt_rc_ram:
+    input:
+        sbwt = "indexes/sbwt_rc/{sample}.sbwt",
         query = "queries/{sample}_pos.fa"
     output:
-        out = "output/ram1/sbwt/{sample}_pos.txt",
-        res = "results/ram1/sbwt/{sample}_pos.txt"
+        out = "output/ram1/sbwt_rc/{sample}_pos.txt",
+        res = "results/ram1/sbwt_rc/{sample}_pos.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sbwt-rs-cli/target/release/sbwt lookup -i {input.sbwt} -o {output.out} -q {input.query} -t 1 -b ) 2>> {output.res}; done"
 
-rule query_neg_sbwt_ram:
+rule query_neg_sbwt_rc_ram:
     input:
-        sbwt = "indexes/sbwt/{sample}.sbwt",
+        sbwt = "indexes/sbwt_rc/{sample}.sbwt",
         query = "queries/{sample}_neg.fa"
     output:
-        out = "output/ram1/sbwt/{sample}_neg.txt",
-        res = "results/ram1/sbwt/{sample}_neg.txt"
+        out = "output/ram1/sbwt_rc/{sample}_neg.txt",
+        res = "results/ram1/sbwt_rc/{sample}_neg.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sbwt-rs-cli/target/release/sbwt lookup -i {input.sbwt} -o {output.out} -q {input.query} -t 1 -b ) 2>> {output.res}; done"
 
-rule query_pos_bqf_ram:
+rule query_pos_sbwt_norc_ram:
     input:
-        bqf = "indexes/bqf/{sample}.bqf",
+        sbwt = "indexes/sbwt_norc/{sample}.sbwt",
         query = "queries/{sample}_pos.fa"
     output:
-        out = "output/ram1/bqf/{sample}_pos.txt",
-        res = "results/ram1/bqf/{sample}_pos.txt"
+        out = "output/ram1/sbwt_norc/{sample}_pos.txt",
+        res = "results/ram1/sbwt_norc/{sample}_pos.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sbwt-rs-cli/target/release/sbwt lookup -i {input.sbwt} -o {output.out} -q {input.query} -t 1 -b ) 2>> {output.res}; done"
+
+rule query_neg_sbwt_norc_ram:
+    input:
+        sbwt = "indexes/sbwt_norc/{sample}.sbwt",
+        query = "queries/{sample}_neg.fa"
+    output:
+        out = "output/ram1/sbwt_norc/{sample}_neg.txt",
+        res = "results/ram1/sbwt_norc/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sbwt-rs-cli/target/release/sbwt lookup -i {input.sbwt} -o {output.out} -q {input.query} -t 1 -b ) 2>> {output.res}; done"
+
+rule query_pos_bqf_ram_can:
+    input:
+        bqf = "indexes/bqf_can/{sample}.bqf",
+        query = "queries/{sample}_pos.fa"
+    output:
+        out = "output/ram1/bqf_can/{sample}_pos.txt",
+        res = "results/ram1/bqf_can/{sample}_pos.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
+
+rule query_neg_bqf_ram_can:
+    input:
+        bqf = "indexes/bqf_can/{sample}.bqf",
+        query = "queries/{sample}_neg.fa"
+    output:
+        out = "output/ram1/bqf_can/{sample}_neg.txt",
+        res = "results/ram1/bqf_can/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
+
+rule query_pos_bqf_ram_noncan:
+    input:
+        bqf = "indexes/bqf_noncan/{sample}.bqf",
+        query = "queries/{sample}_pos.fa"
+    output:
+        out = "output/ram1/bqf_noncan/{sample}_pos.txt",
+        res = "results/ram1/bqf_noncan/{sample}_pos.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
 
 rule query_neg_bqf_ram:
     input:
-        bqf = "indexes/bqf/{sample}.bqf",
+        bqf = "indexes/bqf_noncan/{sample}.bqf",
         query = "queries/{sample}_neg.fa"
     output:
-        out = "output/ram1/bqf/{sample}_neg.txt",
-        res = "results/ram1/bqf/{sample}_neg.txt"
+        out = "output/ram1/bqf_noncan/{sample}_neg.txt",
+        res = "results/ram1/bqf_noncan/{sample}_neg.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
 
-rule query_pos_sshash_ram:
+rule query_pos_sshash_can_ram:
     input:
-        sshash = "indexes/sshash/{sample}.sshash",
+        sshash = "indexes/sshash_can/{sample}.sshash",
         query = "queries/{sample}_pos.fa"
     output:
-        "results/ram1/sshash/{sample}_pos.txt"
+        "results/ram1/sshash_can/{sample}_pos.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sshash/build/sshash query -i {input.sshash} -q {input.query} ) 2>> {output}; done"
 
-rule query_neg_sshash_ram:
+rule query_neg_sshash_can_ram:
     input:
-        sshash = "indexes/sshash/{sample}.sshash",
+        sshash = "indexes/sshash_can/{sample}.sshash",
         query = "queries/{sample}_neg.fa"
     output:
-        "results/ram1/sshash/{sample}_neg.txt"
+        "results/ram1/sshash_can/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sshash/build/sshash query -i {input.sshash} -q {input.query} ) 2>> {output}; done"
+
+rule query_pos_sshash_noncan_ram:
+    input:
+        sshash = "indexes/sshash_noncan/{sample}.sshash",
+        query = "queries/{sample}_pos.fa"
+    output:
+        "results/ram1/sshash_noncan/{sample}_pos.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sshash/build/sshash query -i {input.sshash} -q {input.query} ) 2>> {output}; done"
+
+rule query_neg_sshash_noncan_ram:
+    input:
+        sshash = "indexes/sshash_noncan/{sample}.sshash",
+        query = "queries/{sample}_neg.fa"
+    output:
+        "results/ram1/sshash_noncan/{sample}_neg.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sshash/build/sshash query -i {input.sshash} -q {input.query} ) 2>> {output}; done"
 
@@ -800,25 +1160,43 @@ rule query_neg_sbb_ram:
         "results/ram1/sbb/{sample}_neg.txt"
     shell:
         "mkdir -p ./output/ram1/sbb && for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/SBB/target/release/sbb recruit -p output/ram1/sbb/{wildcards.sample}_neg -f {input.sbb} --fa {input.query} -t 1 ) 2>> {output}; done"
-
-rule query_pos_fmsi_ram:
+"""
+rule query_pos_fmsi_same_ram:
     input:
-        fmsi = "indexes/fmsi/{sample}.msfa.fmsi.ac",
+        fmsi = "indexes/fmsi_same/{sample}.msfa.fmsi.ac",
         query = "queries/{sample}_pos.fa"
     output:
-        "results/ram1/fmsi/{sample}_pos.txt"
+        "results/ram1/fmsi_same/{sample}_pos.txt"
     shell:
-        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi/{wildcards.sample}.msfa ) 2>> {output}; done"
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_same/{wildcards.sample}.msfa ) 2>> {output}; done"
 
-rule query_neg_fmsi_ram:
+rule query_neg_fmsi_same_ram:
     input:
-        fmsi = "indexes/fmsi/{sample}.msfa.fmsi.ac",
+        fmsi = "indexes/fmsi_same/{sample}.msfa.fmsi.ac",
         query = "queries/{sample}_neg.fa"
     output:
-        "results/ram1/fmsi/{sample}_neg.txt"
+        "results/ram1/fmsi_same/{sample}_neg.txt"
     shell:
-        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi/{wildcards.sample}.msfa ) 2>> {output}; done"
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_same/{wildcards.sample}.msfa ) 2>> {output}; done"
 
+rule query_pos_fmsi_dist_ram:
+    input:
+        fmsi = "indexes/fmsi_dist/{sample}.msfa.fmsi.ac",
+        query = "queries/{sample}_pos.fa"
+    output:
+        "results/ram1/fmsi_dist/{sample}_pos.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_dist/{wildcards.sample}.msfa ) 2>> {output}; done"
+
+rule query_neg_fmsi_dist_ram:
+    input:
+        fmsi = "indexes/fmsi_dist/{sample}.msfa.fmsi.ac",
+        query = "queries/{sample}_neg.fa"
+    output:
+        "results/ram1/fmsi_dist/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_dist/{wildcards.sample}.msfa ) 2>> {output}; done"
+"""
 rule query_pos_cbl_ram:
     input:
         cbl = "indexes/cbl/{sample}.cbl",
@@ -915,62 +1293,121 @@ rule query_neg_sklib_ram:
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sklib/build/bin/sskm query -l {input.sklib} -i {input.query} -o {output.out} -t 1 ) 2>> {output.res}; done"  
 
+### RAM STREAMING QUERIES
 
-rule query_str_pos_sbwt_ram:
+rule query_str_pos_sbwt_rc_ram:
     input:
-        sbwt = "indexes/sbwt/{sample}.sbwt",
+        sbwt = "indexes/sbwt_rc/{sample}.sbwt",
         query = "queries/streaming/{sample}_pos.fa"
     output:
-        out = "output/ramstr/sbwt/{sample}_pos.txt",
-        res = "results/ramstr/sbwt/{sample}_pos.txt"
+        out = "output/ramstr/sbwt_rc/{sample}_pos.txt",
+        res = "results/ramstr/sbwt_rc/{sample}_pos.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sbwt-rs-cli/target/release/sbwt lookup -i {input.sbwt} -o {output.out} -q {input.query} -t 1 -b ) 2>> {output.res}; done"
 
-rule query_str_neg_sbwt_ram:
+rule query_str_neg_sbwt_rc_ram:
     input:
-        sbwt = "indexes/sbwt/{sample}.sbwt",
+        sbwt = "indexes/sbwt_rc/{sample}.sbwt",
         query = "queries/streaming/{sample}_neg.fa"
     output:
-        out = "output/ramstr/sbwt/{sample}_neg.txt",
-        res = "results/ramstr/sbwt/{sample}_neg.txt"
+        out = "output/ramstr/sbwt_rc/{sample}_neg.txt",
+        res = "results/ramstr/sbwt_rc/{sample}_neg.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sbwt-rs-cli/target/release/sbwt lookup -i {input.sbwt} -o {output.out} -q {input.query} -t 1 -b ) 2>> {output.res}; done"
 
-rule query_str_pos_bqf_ram:
+rule query_str_pos_sbwt_norc_ram:
     input:
-        bqf = "indexes/bqf/{sample}.bqf",
+        sbwt = "indexes/sbwt_norc/{sample}.sbwt",
         query = "queries/streaming/{sample}_pos.fa"
     output:
-        out = "output/ramstr/bqf/{sample}_pos.txt",
-        res = "results/ramstr/bqf/{sample}_pos.txt"
+        out = "output/ramstr/sbwt_norc/{sample}_pos.txt",
+        res = "results/ramstr/sbwt_norc/{sample}_pos.txt"
     shell:
-        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sbwt-rs-cli/target/release/sbwt lookup -i {input.sbwt} -o {output.out} -q {input.query} -t 1 -b ) 2>> {output.res}; done"
 
-rule query_str_neg_bqf_ram:
+rule query_str_neg_sbwt_norc_ram:
     input:
-        bqf = "indexes/bqf/{sample}.bqf",
+        sbwt = "indexes/sbwt_norc/{sample}.sbwt",
         query = "queries/streaming/{sample}_neg.fa"
     output:
-        out = "output/ramstr/bqf/{sample}_neg.txt",
-        res = "results/ramstr/bqf/{sample}_neg.txt"
+        out = "output/ramstr/sbwt_norc/{sample}_neg.txt",
+        res = "results/ramstr/sbwt_norc/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sbwt-rs-cli/target/release/sbwt lookup -i {input.sbwt} -o {output.out} -q {input.query} -t 1 -b ) 2>> {output.res}; done"
+
+rule query_str_pos_bqf_can_ram:
+    input:
+        bqf = "indexes/bqf_can/{sample}.bqf",
+        query = "queries/streaming/{sample}_pos.fa"
+    output:
+        out = "output/ramstr/bqf_can/{sample}_pos.txt",
+        res = "results/ramstr/bqf_can/{sample}_pos.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
 
-rule query_str_pos_sshash_ram:
+rule query_str_neg_bqf_can_ram:
     input:
-        sshash = "indexes/sshash/{sample}.sshash",
+        bqf = "indexes/bqf_can/{sample}.bqf",
+        query = "queries/streaming/{sample}_neg.fa"
+    output:
+        out = "output/ramstr/bqf_can/{sample}_neg.txt",
+        res = "results/ramstr/bqf_can/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
+
+rule query_str_pos_bqf_noncan_ram:
+    input:
+        bqf = "indexes/bqf_noncan/{sample}.bqf",
         query = "queries/streaming/{sample}_pos.fa"
     output:
-        "results/ramstr/sshash/{sample}_pos.txt"
+        out = "output/ramstr/bqf_noncan/{sample}_pos.txt",
+        res = "results/ramstr/bqf_noncan/{sample}_pos.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
+
+rule query_str_neg_bqf_noncan_ram:
+    input:
+        bqf = "indexes/bqf_noncan/{sample}.bqf",
+        query = "queries/streaming/{sample}_neg.fa"
+    output:
+        out = "output/ramstr/bqf_noncan/{sample}_neg.txt",
+        res = "results/ramstr/bqf_noncan/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/bqf/build/bin/bqf query -b {input.bqf} -i {input.query} -o {output.out} ) 2>> {output.res}; done"
+
+rule query_str_pos_sshash_can_ram:
+    input:
+        sshash = "indexes/sshash_can/{sample}.sshash",
+        query = "queries/streaming/{sample}_pos.fa"
+    output:
+        "results/ramstr/sshash_can/{sample}_pos.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sshash/build/sshash query -i {input.sshash} -q {input.query} ) 2>> {output}; done"
 
-rule query_str_neg_sshash_ram:
+rule query_str_neg_sshash_can_ram:
     input:
-        sshash = "indexes/sshash/{sample}.sshash",
+        sshash = "indexes/sshash_can/{sample}.sshash",
         query = "queries/streaming/{sample}_neg.fa"
     output:
-        "results/ramstr/sshash/{sample}_neg.txt"
+        "results/ramstr/sshash_can/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sshash/build/sshash query -i {input.sshash} -q {input.query} ) 2>> {output}; done"
+
+rule query_str_pos_sshash_noncan_ram:
+    input:
+        sshash = "indexes/sshash_noncan/{sample}.sshash",
+        query = "queries/streaming/{sample}_pos.fa"
+    output:
+        "results/ramstr/sshash_noncan/{sample}_pos.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sshash/build/sshash query -i {input.sshash} -q {input.query} ) 2>> {output}; done"
+
+rule query_str_neg_sshash_noncan_ram:
+    input:
+        sshash = "indexes/sshash_noncan/{sample}.sshash",
+        query = "queries/streaming/{sample}_neg.fa"
+    output:
+        "results/ramstr/sshash_noncan/{sample}_neg.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sshash/build/sshash query -i {input.sshash} -q {input.query} ) 2>> {output}; done"
 
@@ -991,25 +1428,43 @@ rule query_str_neg_sbb_ram:
         "results/ramstr/sbb/{sample}_neg.txt"
     shell:
         "mkdir -p ./output/ramstr/sbb && for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/SBB/target/release/sbb recruit -p output/ramstr/sbb/{wildcards.sample}_neg -f {input.sbb} --fa {input.query} -t 1 ) 2>> {output}; done"
-
-rule query_str_pos_fmsi_ram:
+"""
+rule query_str_pos_fmsi_same_ram:
     input:
-        fmsi = "indexes/fmsi/{sample}.msfa.fmsi.ac",
+        fmsi = "indexes/fmsi_same/{sample}.msfa.fmsi.ac",
         query = "queries/streaming/{sample}_pos.fa"
     output:
-        "results/ramstr/fmsi/{sample}_pos.txt"
+        "results/ramstr/fmsi_same/{sample}_pos.txt"
     shell:
-        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi/{wildcards.sample}.msfa ) 2>> {output}; done"
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_same/{wildcards.sample}.msfa ) 2>> {output}; done"
 
-rule query_str_neg_fmsi_ram:
+rule query_str_neg_fmsi_same_ram:
     input:
-        fmsi = "indexes/fmsi/{sample}.msfa.fmsi.ac",
+        fmsi = "indexes/fmsi_same/{sample}.msfa.fmsi.ac",
         query = "queries/streaming/{sample}_neg.fa"
     output:
-        "results/ramstr/fmsi/{sample}_neg.txt"
+        "results/ramstr/fmsi_same/{sample}_neg.txt"
     shell:
-        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi/{wildcards.sample}.msfa ) 2>> {output}; done"
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_same/{wildcards.sample}.msfa ) 2>> {output}; done"
 
+rule query_str_pos_fmsi_dist_ram:
+    input:
+        fmsi = "indexes/fmsi_dist/{sample}.msfa.fmsi.ac",
+        query = "queries/streaming/{sample}_pos.fa"
+    output:
+        "results/ramstr/fmsi_dist/{sample}_pos.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_dist/{wildcards.sample}.msfa ) 2>> {output}; done"
+
+rule query_str_neg_fmsi_dist_ram:
+    input:
+        fmsi = "indexes/fmsi_dist/{sample}.msfa.fmsi.ac",
+        query = "queries/streaming/{sample}_neg.fa"
+    output:
+        "results/ramstr/fmsi_dist/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_dist/{wildcards.sample}.msfa ) 2>> {output}; done"
+"""
 rule query_str_pos_cbl_ram:
     input:
         cbl = "indexes/cbl/{sample}.cbl",
@@ -1106,15 +1561,27 @@ rule query_str_neg_sklib_ram:
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sklib/build/bin/sskm query -l {input.sklib} -i {input.query} -o {output.out} -t 1 ) 2>> {output.res}; done"  
 
-rule inter_sbwt_ram:
+### RAM INTERSECTIONS
+
+rule inter_sbwt_rc_ram:
     input:
-        sbwt1 = "indexes/sbwt/{index1}.sbwt",
-        sbwt2 = "indexes/sbwt/{index2}.sbwt"
+        sbwt1 = "indexes/sbwt_rc/{index1}.sbwt",
+        sbwt2 = "indexes/sbwt_rc/{index2}.sbwt"
     output:
-        out = "output/raminter/sbwt/{index1}:{index2}.sbwt",
-        res = "results/raminter/sbwt/{index1}:{index2}.txt"
+        out = "output/raminter/sbwt_rc/{index1}:{index2}.sbwt",
+        res = "results/raminter/sbwt_rc/{index1}:{index2}.txt"
     shell:
-        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sbwt-rs-cli/target/release/sbwt intersect -t 1 -o output/raminter/sbwt/{wildcards.index1}:{wildcards.index2}.sbwt {input.sbwt1} {input.sbwt2} ) 2>> {output.res}; done"
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sbwt-rs-cli/target/release/sbwt intersect -t 1 -o output/raminter/sbwt_rc/{wildcards.index1}:{wildcards.index2}.sbwt {input.sbwt1} {input.sbwt2} ) 2>> {output.res}; done"
+
+rule inter_sbwt_norc_ram:
+    input:
+        sbwt1 = "indexes/sbwt_norc/{index1}.sbwt",
+        sbwt2 = "indexes/sbwt_norc/{index2}.sbwt"
+    output:
+        out = "output/raminter/sbwt_norc/{index1}:{index2}.sbwt",
+        res = "results/raminter/sbwt_norc/{index1}:{index2}.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sbwt-rs-cli/target/release/sbwt intersect -t 1 -o output/raminter/sbwt_norc/{wildcards.index1}:{wildcards.index2}.sbwt {input.sbwt1} {input.sbwt2} ) 2>> {output.res}; done"
 
 rule inter_cbl_ram:
     input:
@@ -1135,7 +1602,17 @@ rule inter_fmsi_ram:
         res = "results/raminter/fmsi/{index1}:{index2}.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi inter -r output/raminter/fmsi/{wildcards.index1}:{wildcards.index2} -p {input.fmsi1} -p {input.fmsi2} -k 31 ) 2>> {output.res}; done"
-
+"""
+rule inter_fmsi_dist_ram:
+    input:
+        fmsi1 = "indexes/fmsi_dist/{index1}.msfa",
+        fmsi2 = "indexes/fmsi_dist/{index2}.msfa"
+    output:
+        out = "output/raminter/fmsi_dist/{index1}:{index2}.fmsi.ac",
+        res = "results/raminter/fmsi_dist/{index1}:{index2}.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi inter -r output/raminter/fmsi_dist/{wildcards.index1}:{wildcards.index2} -p {input.fmsi1} -p {input.fmsi2} -k 31 ) 2>> {output.res}; done"
+"""
 rule inter_sklib_ram:
     input:
         skl1 = "indexes/sklib/{index1}.sk",
@@ -1146,12 +1623,22 @@ rule inter_sklib_ram:
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sklib/build/bin/sskm setop -o {output.out} -a {input.skl1} -b {input.skl2} --op intersection ) 2>> {output.res}; done"
 
-rule inter_kmc_ram:
+rule inter_kmc_ram_can:
     input:
-        kmc1 = "indexes/kmc/{index1}_k31.kmc_pre",
-        kmc2 = "indexes/kmc/{index2}_k31.kmc_pre"
+        kmc1 = "indexes/kmc_can/{index1}_k31.kmc_pre",
+        kmc2 = "indexes/kmc_can/{index2}_k31.kmc_pre"
     output:
-        out = "output/raminter/kmc/{index1}:{index2}.kmc_pre",
-        res = "results/raminter/kmc/{index1}:{index2}.txt"
+        out = "output/raminter/kmc_can/{index1}:{index2}.kmc_pre",
+        res = "results/raminter/kmc_can/{index1}:{index2}.txt"
     shell:
-        "mkdir -p results/raminter/kmc && for loop in {{0..9}}; do ( /usr/bin/time -v ./utils/kmc/bin/kmc_tools -t1 simple ./indexes/kmc/{wildcards.index1}_k31 ./indexes/kmc/{wildcards.index2}_k31 intersect output/raminter/kmc/{wildcards.index1}:{wildcards.index2} ) 2>> {output.res}; done"
+        "mkdir -p results/raminter/kmc_can && for loop in {{0..9}}; do ( /usr/bin/time -v ./utils/kmc/bin/kmc_tools -t1 simple ./indexes/kmc_can/{wildcards.index1}_k31 ./indexes/kmc_can/{wildcards.index2}_k31 intersect output/raminter/kmc_can/{wildcards.index1}:{wildcards.index2} ) 2>> {output.res}; done"
+
+rule inter_kmc_ram_noncan:
+    input:
+        kmc1 = "indexes/kmc_noncan/{index1}_k31.kmc_pre",
+        kmc2 = "indexes/kmc_noncan/{index2}_k31.kmc_pre"
+    output:
+        out = "output/raminter/kmc_noncan/{index1}:{index2}.kmc_pre",
+        res = "results/raminter/kmc_noncan/{index1}:{index2}.txt"
+    shell:
+        "mkdir -p results/raminter/kmc_noncan && for loop in {{0..9}}; do ( /usr/bin/time -v ./utils/kmc/bin/kmc_tools -t1 simple ./indexes/kmc_noncan/{wildcards.index1}_k31 ./indexes/kmc_noncan/{wildcards.index2}_k31 intersect output/raminter/kmc_noncan/{wildcards.index1}:{wildcards.index2} ) 2>> {output.res}; done"
