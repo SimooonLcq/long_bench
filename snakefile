@@ -18,11 +18,12 @@ rule all:
         expand("indexes/sshash_can/{dataset}.sshash", dataset = DATASETS),
         expand("indexes/sshash_noncan/{dataset}.sshash", dataset = DATASETS),
         expand("indexes/sbb/{dataset}.bf.zst", dataset = DATASETS),
-        expand("indexes/fmsi/{dataset}.msfa", dataset = DATASETS),
-        expand("indexes/fmsi/{dataset}.msfa.fmsi.ac", dataset = DATASETS),
-        #expand("indexes/fmsi_dist/{dataset}.msfa", dataset = DATASETS),
-        #expand("indexes/fmsi_dist/{dataset}.msfa.fmsi.ac", dataset = DATASETS),
-        expand("indexes/cbl/{dataset}.cbl", dataset = DATASETS),
+        expand("indexes/fmsi_same/{dataset}.msfa", dataset = DATASETS),
+        expand("indexes/fmsi_same/{dataset}.msfa.fmsi.ac", dataset = DATASETS),
+        expand("indexes/fmsi_dist/{dataset}.msfa", dataset = DATASETS),
+        expand("indexes/fmsi_dist/{dataset}.msfa.fmsi.ac", dataset = DATASETS),
+        expand("indexes/cbl_can/{dataset}.cbl", dataset = DATASETS),
+        expand("indexes/cbl_noncan/{dataset}.cbl", dataset = DATASETS),
         expand("indexes/fuze/{dataset}.mp", dataset = DATASETS),
         expand("indexes/swiss/{dataset}.mp", dataset = DATASETS),
         expand("indexes/kmindex/{dataset}_fof.txt", dataset = DATASETS),
@@ -47,12 +48,14 @@ rule all:
         expand("results/1/sshash_noncan/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/1/sbb/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/1/sbb/{dataset}_neg.txt", dataset = DATASETS),
-        #expand("results/1/fmsi_same/{dataset}_pos.txt", dataset = DATASETS),
-        #expand("results/1/fmsi_same/{dataset}_neg.txt", dataset = DATASETS),
-        #expand("results/1/fmsi_dist/{dataset}_pos.txt", dataset = DATASETS),
-        #expand("results/1/fmsi_dist/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/1/cbl/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/1/cbl/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/1/fmsi_same/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/1/fmsi_same/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/1/fmsi_dist/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/1/fmsi_dist/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/1/cbl_can/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/1/cbl_can/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/1/cbl_noncan/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/1/cbl_noncan/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/1/swiss/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/1/swiss/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/1/kmindex/{dataset}_pos.txt", dataset = DATASETS),
@@ -75,12 +78,14 @@ rule all:
         expand("results/str/sshash_noncan/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/str/sbb/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/str/sbb/{dataset}_neg.txt", dataset = DATASETS),
-        #expand("results/str/fmsi_same/{dataset}_pos.txt", dataset = DATASETS),
-        #expand("results/str/fmsi_same/{dataset}_neg.txt", dataset = DATASETS),
-        #expand("results/str/fmsi_dist/{dataset}_pos.txt", dataset = DATASETS),
-        #expand("results/str/fmsi_dist/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/str/cbl/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/str/cbl/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/str/fmsi_same/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/str/fmsi_same/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/str/fmsi_dist/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/str/fmsi_dist/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/str/cbl_can/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/str/cbl_can/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/str/cbl_noncan/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/str/cbl_noncan/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/str/swiss/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/str/swiss/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/str/kmindex/{dataset}_pos.txt", dataset = DATASETS),
@@ -91,9 +96,10 @@ rule all:
         expand("results/str/sklib/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/inter/sbwt_rc/{combination}.txt", combination = COMBINATIONS), #intersections
         expand("results/inter/sbwt_norc/{combination}.txt", combination = COMBINATIONS),
-        expand("results/inter/cbl/{combination}.txt", combination = COMBINATIONS),
-        expand("results/inter/fmsi/{combination}.txt", combination = COMBINATIONS),
-        #expand("results/inter/fmsi_dist/{combination}.txt", combination = COMBINATIONS),
+        expand("results/inter/cbl_can/{combination}.txt", combination = COMBINATIONS),
+        expand("results/inter/cbl_noncan/{combination}.txt", combination = COMBINATIONS),
+        expand("results/inter/fmsi_same/{combination}.txt", combination = COMBINATIONS),
+        expand("results/inter/fmsi_dist/{combination}.txt", combination = COMBINATIONS),
         expand("results/inter/sklib/{combination}.txt", combination = COMBINATIONS),
         expand("results/inter/kmc_can/{combination}.txt", combination = COMBINATIONS),
         expand("results/inter/kmc_noncan/{combination}.txt", combination = COMBINATIONS),
@@ -111,12 +117,14 @@ rule all:
         expand("results/ram1/sshash_noncan/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/ram1/sbb/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/ram1/sbb/{dataset}_neg.txt", dataset = DATASETS),
-        #expand("results/ram1/fmsi_same/{dataset}_pos.txt", dataset = DATASETS),
-        #expand("results/ram1/fmsi_same/{dataset}_neg.txt", dataset = DATASETS),
-        #expand("results/ram1/fmsi_dist/{dataset}_pos.txt", dataset = DATASETS),
-        #expand("results/ram1/fmsi_dist/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/ram1/cbl/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/ram1/cbl/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ram1/fmsi_same/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ram1/fmsi_same/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ram1/fmsi_dist/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ram1/fmsi_dist/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ram1/cbl_can/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ram1/cbl_can/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ram1/cbl_noncan/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ram1/cbl_noncan/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/ram1/swiss/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/ram1/swiss/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/ram1/kmindex/{dataset}_pos.txt", dataset = DATASETS),
@@ -139,12 +147,14 @@ rule all:
         expand("results/ramstr/sshash_noncan/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/ramstr/sbb/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/ramstr/sbb/{dataset}_neg.txt", dataset = DATASETS),
-        #expand("results/ramstr/fmsi_same/{dataset}_pos.txt", dataset = DATASETS),
-        #expand("results/ramstr/fmsi_same/{dataset}_neg.txt", dataset = DATASETS),
-        #expand("results/ramstr/fmsi_dist/{dataset}_pos.txt", dataset = DATASETS),
-        #expand("results/ramstr/fmsi_dist/{dataset}_neg.txt", dataset = DATASETS),
-        expand("results/ramstr/cbl/{dataset}_pos.txt", dataset = DATASETS),
-        expand("results/ramstr/cbl/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ramstr/fmsi_same/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ramstr/fmsi_same/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ramstr/fmsi_dist/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ramstr/fmsi_dist/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ramstr/cbl_can/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ramstr/cbl_can/{dataset}_neg.txt", dataset = DATASETS),
+        expand("results/ramstr/cbl_noncan/{dataset}_pos.txt", dataset = DATASETS),
+        expand("results/ramstr/cbl_noncan/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/ramstr/swiss/{dataset}_pos.txt", dataset = DATASETS),
         expand("results/ramstr/swiss/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/ramstr/kmindex/{dataset}_pos.txt", dataset = DATASETS),
@@ -155,9 +165,10 @@ rule all:
         expand("results/ramstr/sklib/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/raminter/sbwt_rc/{combination}.txt", combination = COMBINATIONS), #ram intersection
         expand("results/raminter/sbwt_norc/{combination}.txt", combination = COMBINATIONS),
-        expand("results/raminter/cbl/{combination}.txt", combination = COMBINATIONS),
-        expand("results/raminter/fmsi/{combination}.txt", combination = COMBINATIONS),
-        #expand("results/raminter/fmsi_dist/{combination}.txt", combination = COMBINATIONS),
+        expand("results/raminter/cbl_can/{combination}.txt", combination = COMBINATIONS),
+        expand("results/raminter/cbl_noncan/{combination}.txt", combination = COMBINATIONS),
+        expand("results/raminter/fmsi_same/{combination}.txt", combination = COMBINATIONS),
+        expand("results/raminter/fmsi_dist/{combination}.txt", combination = COMBINATIONS),
         expand("results/raminter/sklib/{combination}.txt", combination = COMBINATIONS),
         expand("results/raminter/kmc_can/{combination}.txt", combination = COMBINATIONS),
         expand("results/raminter/kmc_noncan/{combination}.txt", combination = COMBINATIONS)
@@ -280,30 +291,30 @@ rule index_sbb:
     shell:
         "./bench/SBB/target/release/sbb maker -k 31 -p indexes/sbb/{wildcards.sample} {input}"
 
-rule kmercamel:
+rule kmercamel_same:
     input:
         "eulertigs/{sample}_k31_e.fa"
     output:
-        "indexes/fmsi/{sample}.msfa"
+        "indexes/fmsi_same/{sample}.msfa"
     shell:
         "./utils/kmercamel/kmercamel compute -S -k 31 -o {output} {input}"
 
-"""rule kmercamel_dist:
+rule kmercamel_dist:
     input:
         "eulertigs/{sample}_k31_e.fa"
     output:
         "indexes/fmsi_dist/{sample}.msfa"
     shell:
         "./utils/kmercamel/kmercamel compute -u -S -k 31 -o {output} {input}"
-"""
-rule index_fmsi:
+
+rule index_fmsi_same:
     input:
-        "indexes/fmsi/{sample}.msfa"
+        "indexes/fmsi_same/{sample}.msfa"
     output:
-        "indexes/fmsi/{sample}.msfa.fmsi.ac"
+        "indexes/fmsi_same/{sample}.msfa.fmsi.ac"
     shell:
         "./bench/fmsi/fmsi index -k 31 {input}"
-"""
+
 rule index_fmsi_dist:
     input:
         "indexes/fmsi_dist/{sample}.msfa"
@@ -311,14 +322,22 @@ rule index_fmsi_dist:
         "indexes/fmsi_dist/{sample}.msfa.fmsi.ac"
     shell:
         "./bench/fmsi/fmsi index -k 31 {input}"
-"""
-rule index_cbl:
+
+rule index_cbl_can:
     input:
         "eulertigs/{sample}_k31_e.fa"
     output:
-        "indexes/cbl/{sample}.cbl"
+        "indexes/cbl_can/{sample}.cbl"
     shell:
         "./bench/cbl/cbl build -o {output} -c {input}"
+
+rule index_cbl_noncan:
+    input:
+        "eulertigs/{sample}_k31_e.fa"
+    output:
+        "indexes/cbl_noncan/{sample}.cbl"
+    shell:
+        "./bench/cbl/cbl build -o {output} {input}"
 
 rule index_swiss:
     input:
@@ -542,7 +561,7 @@ rule query_neg_sbb:
     shell:
         "mkdir -p ./output/1/sbb && for loop in {{0..9}}; do ( time ./bench/SBB/target/release/sbb recruit -p output/1/sbb/{wildcards.sample}_neg -f {input.sbb} --fa {input.query} -t 1 ) 2>> {output}; done"
 
-"""rule query_pos_fmsi_same:
+rule query_pos_fmsi_same:
     input:
         fmsi = "indexes/fmsi_same/{sample}.msfa.fmsi.ac",
         query = "queries/{sample}_pos.fa"
@@ -577,22 +596,40 @@ rule query_neg_fmsi_dist:
         "results/1/fmsi_dist/{sample}_neg.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_dist/{wildcards.sample}.msfa ) 2>> {output}; done"
-"""
-rule query_pos_cbl:
+
+rule query_pos_cbl_can:
     input:
-        cbl = "indexes/cbl/{sample}.cbl",
+        cbl = "indexes/cbl_can/{sample}.cbl",
         query = "queries/{sample}_pos.fa"
     output:
-        "results/1/cbl/{sample}_pos.txt"
+        "results/1/cbl_can/{sample}_pos.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/cbl/cbl query {input.cbl} {input.query} ) 2>> {output}; done"
 
-rule query_neg_cbl:
+rule query_neg_cbl_can:
     input:
-        cbl = "indexes/cbl/{sample}.cbl",
+        cbl = "indexes/cbl_can/{sample}.cbl",
         query = "queries/{sample}_neg.fa"
     output:
-        "results/1/cbl/{sample}_neg.txt"
+        "results/1/cbl_can/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/cbl/cbl query {input.cbl} {input.query} ) 2>> {output}; done"
+
+rule query_pos_cbl_noncan:
+    input:
+        cbl = "indexes/cbl_noncan/{sample}.cbl",
+        query = "queries/{sample}_pos.fa"
+    output:
+        "results/1/cbl_noncan/{sample}_pos.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/cbl/cbl query {input.cbl} {input.query} ) 2>> {output}; done"
+
+rule query_neg_cbl_noncan:
+    input:
+        cbl = "indexes/cbl_noncan/{sample}.cbl",
+        query = "queries/{sample}_neg.fa"
+    output:
+        "results/1/cbl_noncan/{sample}_neg.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/cbl/cbl query {input.cbl} {input.query} ) 2>> {output}; done"
 
@@ -809,7 +846,7 @@ rule query_str_neg_sbb:
         "results/str/sbb/{sample}_neg.txt"
     shell:
         "mkdir -p ./output/str/sbb && for loop in {{0..9}}; do ( time ./bench/SBB/target/release/sbb recruit -p output/str/sbb/{wildcards.sample}_neg -f {input.sbb} --fa {input.query} -t 1 ) 2>> {output}; done"
-"""
+
 rule query_str_pos_fmsi_same:
     input:
         fmsi = "indexes/fmsi_same/{sample}.msfa.fmsi.ac",
@@ -845,22 +882,40 @@ rule query_str_neg_fmsi_dist:
         "results/str/fmsi_dist/{sample}_neg.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_dist/{wildcards.sample}.msfa ) 2>> {output}; done"
-"""
-rule query_str_pos_cbl:
+
+rule query_str_pos_cbl_can:
     input:
-        cbl = "indexes/cbl/{sample}.cbl",
+        cbl = "indexes/cbl_can/{sample}.cbl",
         query = "queries/streaming/{sample}_pos.fa"
     output:
-        "results/str/cbl/{sample}_pos.txt"
+        "results/str/cbl_can/{sample}_pos.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/cbl/cbl query {input.cbl} {input.query} ) 2>> {output}; done"
 
-rule query_str_neg_cbl:
+rule query_str_neg_cbl_can:
     input:
-        cbl = "indexes/cbl/{sample}.cbl",
+        cbl = "indexes/cbl_can/{sample}.cbl",
         query = "queries/streaming/{sample}_neg.fa"
     output:
-        "results/str/cbl/{sample}_neg.txt"
+        "results/str/cbl_can/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/cbl/cbl query {input.cbl} {input.query} ) 2>> {output}; done"
+
+rule query_str_pos_cbl_noncan:
+    input:
+        cbl = "indexes/cbl_noncan/{sample}.cbl",
+        query = "queries/streaming/{sample}_pos.fa"
+    output:
+        "results/str/cbl_noncan/{sample}_pos.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/cbl/cbl query {input.cbl} {input.query} ) 2>> {output}; done"
+
+rule query_str_neg_cbl_noncan:
+    input:
+        cbl = "indexes/cbl_noncan/{sample}.cbl",
+        query = "queries/streaming/{sample}_neg.fa"
+    output:
+        "results/str/cbl_noncan/{sample}_neg.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/cbl/cbl query {input.cbl} {input.query} ) 2>> {output}; done"
 
@@ -964,36 +1019,50 @@ rule inter_sbwt_norc:
     shell:
         "for loop in {{0..9}}; do ( time ./bench/sbwt-rs-cli/target/release/sbwt intersect -t 1 -o output/inter/sbwt_norc/{wildcards.index1}:{wildcards.index2}.sbwt {input.sbwt1} {input.sbwt2} ) 2>> {output.res}; done"
 
-rule inter_cbl:
+rule inter_cbl_can:
     input:
-        cbl1 = "indexes/cbl/{index1}.cbl",
-        cbl2 = "indexes/cbl/{index2}.cbl"
+        cbl1 = "indexes/cbl_can/{index1}.cbl",
+        cbl2 = "indexes/cbl_can/{index2}.cbl"
     output:
-        out = "output/inter/cbl/{index1}:{index2}.cbl",
-        res = "results/inter/cbl/{index1}:{index2}.txt"
+        out = "output/inter/cbl_can/{index1}:{index2}.cbl",
+        res = "results/inter/cbl_can/{index1}:{index2}.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/cbl/cbl inter -o {output.out} {input.cbl1} {input.cbl2} ) 2>> {output.res}; done"
 
-rule inter_fmsi:
+rule inter_cbl_noncan:
     input:
-        fmsi1 = "indexes/fmsi/{index1}.msfa",
-        fmsi2 = "indexes/fmsi/{index2}.msfa"
+        cbl1 = "indexes/cbl_noncan/{index1}.cbl",
+        cbl2 = "indexes/cbl_noncan/{index2}.cbl"
     output:
-        out = "output/inter/fmsi/{index1}:{index2}.fmsi.ac",
-        res = "results/inter/fmsi/{index1}:{index2}.txt"
+        out = "output/inter/cbl_noncan/{index1}:{index2}.cbl",
+        res = "results/inter/cbl_noncan/{index1}:{index2}.txt"
     shell:
-        "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi inter -r output/inter/fmsi/{wildcards.index1}:{wildcards.index2} -p {input.fmsi1} -p {input.fmsi2} -k 31 ) 2>> {output.res}; done"
-"""
+        "for loop in {{0..9}}; do ( time ./bench/cbl/cbl inter -o {output.out} {input.cbl1} {input.cbl2} ) 2>> {output.res}; done"
+
+rule inter_fmsi_same:
+    input:
+        fmsi1 = "indexes/fmsi_same/{index1}.msfa",
+        fmsi2 = "indexes/fmsi_same/{index2}.msfa",
+        fmsi1_full = "indexes/fmsi_same/{index1}.msfa.fmsi.ac",
+        fmsi2_full = "indexes/fmsi_same/{index2}.msfa.fmsi.ac"
+    output:
+        out = "output/inter/fmsi_same/{index1}:{index2}.fmsi.ac",
+        res = "results/inter/fmsi_same/{index1}:{index2}.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi inter -r output/inter/fmsi_same/{wildcards.index1}:{wildcards.index2} -p {input.fmsi1} -p {input.fmsi2} -k 31 ) 2>> {output.res}; done"
+
 rule inter_fmsi_dist:
     input:
         fmsi1 = "indexes/fmsi_dist/{index1}.msfa",
-        fmsi2 = "indexes/fmsi_dist/{index2}.msfa"
+        fmsi2 = "indexes/fmsi_dist/{index2}.msfa",
+        fmsi1_full = "indexes/fmsi_dist/{index1}.msfa.fmsi.ac",
+        fmsi2_full = "indexes/fmsi_dist/{index2}.msfa.fmsi.ac"
     output:
         out = "output/inter/fmsi_dist/{index1}:{index2}.fmsi.ac",
         res = "results/inter/fmsi_dist/{index1}:{index2}.txt"
     shell:
         "for loop in {{0..9}}; do ( time ./bench/fmsi/fmsi inter -r output/inter/fmsi_dist/{wildcards.index1}:{wildcards.index2} -p {input.fmsi1} -p {input.fmsi2} -k 31 ) 2>> {output.res}; done"
-"""
+
 rule inter_sklib:
     input:
         skl1 = "indexes/sklib/{index1}.sk",
@@ -1160,7 +1229,7 @@ rule query_neg_sbb_ram:
         "results/ram1/sbb/{sample}_neg.txt"
     shell:
         "mkdir -p ./output/ram1/sbb && for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/SBB/target/release/sbb recruit -p output/ram1/sbb/{wildcards.sample}_neg -f {input.sbb} --fa {input.query} -t 1 ) 2>> {output}; done"
-"""
+
 rule query_pos_fmsi_same_ram:
     input:
         fmsi = "indexes/fmsi_same/{sample}.msfa.fmsi.ac",
@@ -1196,22 +1265,40 @@ rule query_neg_fmsi_dist_ram:
         "results/ram1/fmsi_dist/{sample}_neg.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_dist/{wildcards.sample}.msfa ) 2>> {output}; done"
-"""
-rule query_pos_cbl_ram:
+
+rule query_pos_cbl_can_ram:
     input:
-        cbl = "indexes/cbl/{sample}.cbl",
+        cbl = "indexes/cbl_can/{sample}.cbl",
         query = "queries/{sample}_pos.fa"
     output:
-        "results/ram1/cbl/{sample}_pos.txt"
+        "results/ram1/cbl_can/{sample}_pos.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/cbl/cbl query {input.cbl} {input.query} ) 2>> {output}; done"
 
-rule query_neg_cbl_ram:
+rule query_neg_cbl_can_ram:
     input:
-        cbl = "indexes/cbl/{sample}.cbl",
+        cbl = "indexes/cbl_can/{sample}.cbl",
         query = "queries/{sample}_neg.fa"
     output:
-        "results/ram1/cbl/{sample}_neg.txt"
+        "results/ram1/cbl_can/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/cbl/cbl query {input.cbl} {input.query} ) 2>> {output}; done"
+
+rule query_pos_cbl_noncan_ram:
+    input:
+        cbl = "indexes/cbl_noncan/{sample}.cbl",
+        query = "queries/{sample}_pos.fa"
+    output:
+        "results/ram1/cbl_noncan/{sample}_pos.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/cbl/cbl query {input.cbl} {input.query} ) 2>> {output}; done"
+
+rule query_neg_cbl_noncan_ram:
+    input:
+        cbl = "indexes/cbl_noncan/{sample}.cbl",
+        query = "queries/{sample}_neg.fa"
+    output:
+        "results/ram1/cbl_noncan/{sample}_neg.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/cbl/cbl query {input.cbl} {input.query} ) 2>> {output}; done"
 
@@ -1428,7 +1515,7 @@ rule query_str_neg_sbb_ram:
         "results/ramstr/sbb/{sample}_neg.txt"
     shell:
         "mkdir -p ./output/ramstr/sbb && for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/SBB/target/release/sbb recruit -p output/ramstr/sbb/{wildcards.sample}_neg -f {input.sbb} --fa {input.query} -t 1 ) 2>> {output}; done"
-"""
+
 rule query_str_pos_fmsi_same_ram:
     input:
         fmsi = "indexes/fmsi_same/{sample}.msfa.fmsi.ac",
@@ -1464,22 +1551,40 @@ rule query_str_neg_fmsi_dist_ram:
         "results/ramstr/fmsi_dist/{sample}_neg.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi query -q {input.query} -k 31 indexes/fmsi_dist/{wildcards.sample}.msfa ) 2>> {output}; done"
-"""
-rule query_str_pos_cbl_ram:
+
+rule query_str_pos_cbl_can_ram:
     input:
-        cbl = "indexes/cbl/{sample}.cbl",
+        cbl = "indexes/cbl_can/{sample}.cbl",
         query = "queries/streaming/{sample}_pos.fa"
     output:
-        "results/ramstr/cbl/{sample}_pos.txt"
+        "results/ramstr/cbl_can/{sample}_pos.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/cbl/cbl query {input.cbl} {input.query} ) 2>> {output}; done"
 
-rule query_str_neg_cbl_ram:
+rule query_str_neg_cbl_can_ram:
     input:
-        cbl = "indexes/cbl/{sample}.cbl",
+        cbl = "indexes/cbl_can/{sample}.cbl",
         query = "queries/streaming/{sample}_neg.fa"
     output:
-        "results/ramstr/cbl/{sample}_neg.txt"
+        "results/ramstr/cbl_can/{sample}_neg.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/cbl/cbl query {input.cbl} {input.query} ) 2>> {output}; done"
+
+rule query_str_pos_cbl_noncan_ram:
+    input:
+        cbl = "indexes/cbl_noncan/{sample}.cbl",
+        query = "queries/streaming/{sample}_pos.fa"
+    output:
+        "results/ramstr/cbl_noncan/{sample}_pos.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/cbl/cbl query {input.cbl} {input.query} ) 2>> {output}; done"
+
+rule query_str_neg_cbl_noncan_ram:
+    input:
+        cbl = "indexes/cbl_noncan/{sample}.cbl",
+        query = "queries/streaming/{sample}_neg.fa"
+    output:
+        "results/ramstr/cbl_noncan/{sample}_neg.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/cbl/cbl query {input.cbl} {input.query} ) 2>> {output}; done"
 
@@ -1583,36 +1688,50 @@ rule inter_sbwt_norc_ram:
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/sbwt-rs-cli/target/release/sbwt intersect -t 1 -o output/raminter/sbwt_norc/{wildcards.index1}:{wildcards.index2}.sbwt {input.sbwt1} {input.sbwt2} ) 2>> {output.res}; done"
 
-rule inter_cbl_ram:
+rule inter_cbl_can_ram:
     input:
-        cbl1 = "indexes/cbl/{index1}.cbl",
-        cbl2 = "indexes/cbl/{index2}.cbl"
+        cbl1 = "indexes/cbl_can/{index1}.cbl",
+        cbl2 = "indexes/cbl_can/{index2}.cbl"
     output:
-        out = "output/raminter/cbl/{index1}:{index2}.cbl",
-        res = "results/raminter/cbl/{index1}:{index2}.txt"
+        out = "output/raminter/cbl_can/{index1}:{index2}.cbl",
+        res = "results/raminter/cbl_can/{index1}:{index2}.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/cbl/cbl inter -o {output.out} {input.cbl1} {input.cbl2} ) 2>> {output.res}; done"
 
-rule inter_fmsi_ram:
+rule inter_cbl_noncan_ram:
     input:
-        fmsi1 = "indexes/fmsi/{index1}.msfa",
-        fmsi2 = "indexes/fmsi/{index2}.msfa"
+        cbl1 = "indexes/cbl_noncan/{index1}.cbl",
+        cbl2 = "indexes/cbl_noncan/{index2}.cbl"
     output:
-        out = "output/raminter/fmsi/{index1}:{index2}.fmsi.ac",
-        res = "results/raminter/fmsi/{index1}:{index2}.txt"
+        out = "output/raminter/cbl_noncan/{index1}:{index2}.cbl",
+        res = "results/raminter/cbl_noncan/{index1}:{index2}.txt"
     shell:
-        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi inter -r output/raminter/fmsi/{wildcards.index1}:{wildcards.index2} -p {input.fmsi1} -p {input.fmsi2} -k 31 ) 2>> {output.res}; done"
-"""
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/cbl/cbl inter -o {output.out} {input.cbl1} {input.cbl2} ) 2>> {output.res}; done"
+
+rule inter_fmsi_same_ram:
+    input:
+        fmsi1 = "indexes/fmsi_same/{index1}.msfa",
+        fmsi2 = "indexes/fmsi_same/{index2}.msfa",
+        fmsi1_full = "indexes/fmsi_same/{index1}.msfa.fmsi.ac",
+        fmsi2_full = "indexes/fmsi_same/{index2}.msfa.fmsi.ac"
+    output:
+        out = "output/raminter/fmsi_same/{index1}:{index2}.fmsi.ac",
+        res = "results/raminter/fmsi_same/{index1}:{index2}.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi inter -r output/raminter/fmsi_same/{wildcards.index1}:{wildcards.index2} -p {input.fmsi1} -p {input.fmsi2} -k 31 ) 2>> {output.res}; done"
+
 rule inter_fmsi_dist_ram:
     input:
         fmsi1 = "indexes/fmsi_dist/{index1}.msfa",
-        fmsi2 = "indexes/fmsi_dist/{index2}.msfa"
+        fmsi2 = "indexes/fmsi_dist/{index2}.msfa",
+        fmsi1_full = "indexes/fmsi_dist/{index1}.msfa.fmsi.ac",
+        fmsi2_full = "indexes/fmsi_dist/{index2}.msfa.fmsi.ac"
     output:
         out = "output/raminter/fmsi_dist/{index1}:{index2}.fmsi.ac",
         res = "results/raminter/fmsi_dist/{index1}:{index2}.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/fmsi/fmsi inter -r output/raminter/fmsi_dist/{wildcards.index1}:{wildcards.index2} -p {input.fmsi1} -p {input.fmsi2} -k 31 ) 2>> {output.res}; done"
-"""
+
 rule inter_sklib_ram:
     input:
         skl1 = "indexes/sklib/{index1}.sk",
