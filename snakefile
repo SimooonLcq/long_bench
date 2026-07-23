@@ -1780,7 +1780,7 @@ rule inter_swiss_ram:
         swiss1 = "indexes/swiss/{index1}.mp",
         swiss2 = "indexes/swiss/{index2}.mp"
     output:
-        out = "output/inter/swiss/{index1}:{index2}.mp",
-        res = "results/inter/swiss/{index1}:{index2}.txt"
+        out = "output/raminter/swiss/{index1}:{index2}.mp",
+        res = "results/raminter/swiss/{index1}:{index2}.txt"
     shell:
         "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/ST/insect/target/release/insect -o {output.out} -i {input.skl1} -j {input.skl2} ) 2>> {output.res}; done"
