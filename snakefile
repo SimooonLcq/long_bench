@@ -11,8 +11,8 @@ rule all:
         expand("indexes/sbwt_rc/{dataset}.lcs", dataset = DATASETS),
         expand("indexes/sbwt_norc/{dataset}.sbwt", dataset = DATASETS),
         expand("indexes/sbwt_norc/{dataset}.lcs", dataset = DATASETS),
-        expand("kmc/{dataset}_k25_can.kmc_pre", dataset = DATASETS),
-        expand("kmc/{dataset}_k25_noncan.kmc_pre", dataset = DATASETS),
+        expand("indexes/bqf_can/{dataset}_k25_can.txt", dataset = DATASETS),
+        expand("indexes/bqf_noncan/{dataset}_k25_noncan.txt", dataset = DATASETS),
         expand("indexes/bqf_can/{dataset}.bqf", dataset = DATASETS),
         expand("indexes/bqf_noncan/{dataset}.bqf", dataset = DATASETS),
         expand("indexes/sshash_can/{dataset}.sshash", dataset = DATASETS),
@@ -103,6 +103,7 @@ rule all:
         expand("results/inter/sklib/{combination}.txt", combination = COMBINATIONS),
         expand("results/inter/kmc_can/{combination}.txt", combination = COMBINATIONS),
         expand("results/inter/kmc_noncan/{combination}.txt", combination = COMBINATIONS),
+        expand("results/inter/swiss/{combination}.txt", combination = COMBINATIONS),
         expand("results/ram1/sbwt_rc/{dataset}_pos.txt", dataset = DATASETS), #ram single queries
         expand("results/ram1/sbwt_rc/{dataset}_neg.txt", dataset = DATASETS),
         expand("results/ram1/sbwt_norc/{dataset}_pos.txt", dataset = DATASETS),
@@ -171,7 +172,8 @@ rule all:
         expand("results/raminter/fmsi_dist/{combination}.txt", combination = COMBINATIONS),
         expand("results/raminter/sklib/{combination}.txt", combination = COMBINATIONS),
         expand("results/raminter/kmc_can/{combination}.txt", combination = COMBINATIONS),
-        expand("results/raminter/kmc_noncan/{combination}.txt", combination = COMBINATIONS)
+        expand("results/raminter/kmc_noncan/{combination}.txt", combination = COMBINATIONS),
+        expand("results/raminter/swiss/{combination}.txt", combination = COMBINATIONS)
     output:
         "results/1/extractor1.py",
         "results/scatteR1.R"
@@ -235,37 +237,39 @@ rule kmc_can:
     input:
         "eulertigs/{sample}_k31_e.fa"
     output:
-        "kmc/{sample}_k25_can.kmc_pre",
-        "kmc/{sample}_k25_can.kmc_suf",
+        "indexes/bqf_can/{sample}_k25_can.txt"
     shell:
-        "mkdir kmc/{wildcards.sample}_can && ./utils/kmc/bin/kmc -fm -k25 -ci1 {input} kmc/{wildcards.sample}_k25_can kmc/{wildcards.sample}_can"
+        """
+        mkdir -p indexes/bqf_can/{wildcards.sample}_can && ./utils/kmc/bin/kmc -fm -k25 -ci1 {input} indexes/bqf_can/{wildcards.sample}_k25_can indexes/bqf_can/{wildcards.sample}_can
+        ./utils/kmc/bin/kmc_tools transform indexes/bqf_can/{wildcards.sample}_k25_can dump indexes/bqf_can/{wildcards.sample}_k25_can.txt
+        """
 
 rule kmc_noncan:
     input:
         "eulertigs/{sample}_k31_e.fa"
     output:
-        "kmc/{sample}_k25_noncan.kmc_pre",
-        "kmc/{sample}_k25_noncan.kmc_suf",
+        "indexes/bqf_noncan/{sample}_k25_noncan.txt"
     shell:
-        "mkdir kmc/{wildcards.sample}_noncan && ./utils/kmc/bin/kmc -fm -b -k25 -ci1 {input} kmc/{wildcards.sample}_k25_noncan kmc/{wildcards.sample}_noncan"
+        """
+        mkdir -p indexes/bqf_noncan/{wildcards.sample}_noncan && ./utils/kmc/bin/kmc -fm -b -k25 -ci1 {input} indexes/bqf_noncan/{wildcards.sample}_k25_noncan indexes/bqf_noncan/{wildcards.sample}_noncan
+        ./utils/kmc/bin/kmc_tools transform indexes/bqf_noncan/{wildcards.sample}_k25_noncan dump indexes/bqf_noncan/{wildcards.sample}_k25_noncan.txt
+        """
 
 rule index_bqf_can:
     input:
-        "kmc/{sample}_k25_can.kmc_pre",
-        "kmc/{sample}_k25_can.kmc_suf",
+        "indexes/bqf_can/{sample}_k25_can.txt"
     output:
         "indexes/bqf_can/{sample}.bqf"
     shell:
-        "./bench/bqf/build/bin/bqf build -i kmc/{wildcards.sample}_k25_can -o {output} -k 31 -z 16"
+        "./bench/bqf/build/bin/bqf build -k 31 -z 6 -i indexes/bqf_can/{wildcards.sample}_k25_can.txt -o {output}"
 
 rule index_bqf_noncan:
     input:
-        "kmc/{sample}_k25_noncan.kmc_pre",
-        "kmc/{sample}_k25_noncan.kmc_suf",
+        "indexes/bqf_noncan/{sample}_k25_noncan.txt"
     output:
         "indexes/bqf_noncan/{sample}.bqf"
     shell:
-        "./bench/bqf/build/bin/bqf build -i kmc/{wildcards.sample}_k25_can -o {output} -k 31 -z 16"
+        "./bench/bqf/build/bin/bqf build -k 31 -z 6 -i indexes/bqf_noncan/{wildcards.sample}_k25_can.txt -o {output}"
 
 rule index_sshash_can:
     input:
@@ -407,7 +411,7 @@ rule neg_queries:
     output:
         "queries/{sample}_neg.fa"
     shell:
-        "python3 utils/neg_query.py -i {input} -k 31 -o {output} -n 100000"
+        "utils/single_neg/target/release/single_neg -i {input} -k 31 -o {output} -n 100000"
 
 rule pos_streaming:
     input:
@@ -660,7 +664,7 @@ rule query_pos_kmindex:
     conda:
         "envs/kmindex.yaml"
     shell:
-        "for loop in {{0..9}}; do ( time kmindex query -i indexes/kmindex/{wildcards.sample}/ -z 6 -o output/1/kmindex/{wildcards.sample}_pos_$loop -q {input.query} -t 1 ) 2>> {output}; done"
+        "for loop in {{0..9}}; do ( mkdir -p output/1/kmindex && time kmindex query -i indexes/kmindex/{wildcards.sample}/ -z 6 -o output//1//kmindex//{wildcards.sample}_pos_$loop -q {input.query} -t 1 ) 2>> {output}; done"
 
 rule query_neg_kmindex:
     input:
@@ -671,7 +675,7 @@ rule query_neg_kmindex:
     conda:
         "envs/kmindex.yaml"
     shell:
-        "for loop in {{0..9}}; do ( time kmindex query -i indexes/kmindex/{wildcards.sample}/ -z 6 -o output/1/kmindex/{wildcards.sample}_neg_$loop -q {input.query} -t 1 ) 2>> {output}; done"
+        "for loop in {{0..9}}; do ( mkdir -p output/1/kmindex && time kmindex query -i indexes/kmindex/{wildcards.sample}/ -z 6 -o output//1//kmindex//{wildcards.sample}_neg_$loop -q {input.query} -t 1 ) 2>> {output}; done"
 
 rule query_pos_fuze:
     input:
@@ -946,7 +950,7 @@ rule query_str_pos_kmindex:
     conda:
         "envs/kmindex.yaml"
     shell:
-        "for loop in {{0..9}}; do ( time kmindex query -i indexes/kmindex/{wildcards.sample}/ -z 6 -o output/str/kmindex/{wildcards.sample}_pos_$loop -q {input.query} -t 1 ) 2>> {output}; done"
+        "for loop in {{0..9}}; do ( mkdir -p output/str/kmindex && time kmindex query -i indexes/kmindex/{wildcards.sample}/ -z 6 -o output//str//kmindex//{wildcards.sample}_pos_$loop -q {input.query} -t 1 ) 2>> {output}; done"
 
 rule query_str_neg_kmindex:
     input:
@@ -957,7 +961,7 @@ rule query_str_neg_kmindex:
     conda:
         "envs/kmindex.yaml"
     shell:
-        "for loop in {{0..9}}; do ( time kmindex query -i indexes/kmindex/{wildcards.sample}/ -z 6 -o output/str/kmindex/{wildcards.sample}_neg_$loop -q {input.query} -t 1 ) 2>> {output}; done"
+        "for loop in {{0..9}}; do ( mkdir -p output/str/kmindex && time kmindex query -i indexes/kmindex/{wildcards.sample}/ -z 6 -o output//str//kmindex//{wildcards.sample}_neg_$loop -q {input.query} -t 1 ) 2>> {output}; done"
 
 rule query_str_pos_fuze:
     input:
@@ -1093,6 +1097,15 @@ rule inter_kmc_noncan:
     shell:
         "mkdir -p results/inter/kmc_noncan && for loop in {{0..9}}; do ( time ./utils/kmc/bin/kmc_tools -t1 simple ./indexes/kmc_noncan/{wildcards.index1}_k31 ./indexes/kmc_noncan/{wildcards.index2}_k31 intersect output/inter/kmc_noncan/{wildcards.index1}:{wildcards.index2} ) 2>> {output.res}; done"
 
+rule inter_swiss:
+    input:
+        swiss1 = "indexes/swiss/{index1}.mp",
+        swiss2 = "indexes/swiss/{index2}.mp"
+    output:
+        out = "output/inter/swiss/{index1}:{index2}.mp",
+        res = "results/inter/swiss/{index1}:{index2}.txt"
+    shell:
+        "for loop in {{0..9}}; do ( time ./bench/ST/insect/target/release/insect -o {output.out} -i {input.skl1} -j {input.skl2} ) 2>> {output.res}; done"
 
 ### RAM SINGLE QUERIES
 
@@ -1329,7 +1342,7 @@ rule query_pos_kmindex_ram:
     conda:
         "envs/kmindex.yaml"
     shell:
-        "for loop in {{0..9}}; do ( /usr/bin/time -v kmindex query -i indexes/kmindex/{wildcards.sample}/ -z 6 -o output/ram1/kmindex/{wildcards.sample}_pos_$loop -q {input.query} -t 1 ) 2>> {output}; done"
+        "for loop in {{0..9}}; do ( mkdir -p output/ram1/kmindex && /usr/bin/time -v kmindex query -i indexes/kmindex/{wildcards.sample}/ -z 6 -o output//ram1//kmindex//{wildcards.sample}_pos_$loop -q {input.query} -t 1 ) 2>> {output}; done"
 
 rule query_neg_kmindex_ram:
     input:
@@ -1340,7 +1353,7 @@ rule query_neg_kmindex_ram:
     conda:
         "envs/kmindex.yaml"
     shell:
-        "for loop in {{0..9}}; do ( /usr/bin/time -v kmindex query -i indexes/kmindex/{wildcards.sample}/ -z 6 -o output/ram1/kmindex/{wildcards.sample}_neg_$loop -q {input.query} -t 1 ) 2>> {output}; done"
+        "for loop in {{0..9}}; do ( mkdir -p output/ram1/kmindex &&  /usr/bin/time -v kmindex query -i indexes/kmindex/{wildcards.sample}/ -z 6 -o output//ram1//kmindex//{wildcards.sample}_neg_$loop -q {input.query} -t 1 ) 2>> {output}; done"
 
 rule query_pos_fuze_ram:
     input:
@@ -1615,7 +1628,7 @@ rule query_str_pos_kmindex_ram:
     conda:
         "envs/kmindex.yaml"
     shell:
-        "for loop in {{0..9}}; do ( /usr/bin/time -v kmindex query -i indexes/kmindex/{wildcards.sample}/ -z 6 -o output/ramstr/kmindex/{wildcards.sample}_pos_$loop -q {input.query} -t 1 ) 2>> {output}; done"
+        "for loop in {{0..9}}; do ( mkdir -p output/ramstr/kmindex &&  /usr/bin/time -v kmindex query -i indexes/kmindex/{wildcards.sample}/ -z 6 -o output/ramstr/kmindex/{wildcards.sample}_pos_$loop -q {input.query} -t 1 ) 2>> {output}; done"
 
 rule query_str_neg_kmindex_ram:
     input:
@@ -1626,7 +1639,7 @@ rule query_str_neg_kmindex_ram:
     conda:
         "envs/kmindex.yaml"
     shell:
-        "for loop in {{0..9}}; do ( /usr/bin/time -v kmindex query -i indexes/kmindex/{wildcards.sample}/ -z 6 -o output/ramstr/kmindex/{wildcards.sample}_neg_$loop -q {input.query} -t 1 ) 2>> {output}; done"
+        "for loop in {{0..9}}; do ( mkdir -p output/ramstr/kmindex &&  /usr/bin/time -v kmindex query -i indexes/kmindex/{wildcards.sample}/ -z 6 -o output//ramstr//kmindex//{wildcards.sample}_neg_$loop -q {input.query} -t 1 ) 2>> {output}; done"
 
 rule query_str_pos_fuze_ram:
     input:
@@ -1761,3 +1774,13 @@ rule inter_kmc_ram_noncan:
         res = "results/raminter/kmc_noncan/{index1}:{index2}.txt"
     shell:
         "mkdir -p results/raminter/kmc_noncan && for loop in {{0..9}}; do ( /usr/bin/time -v ./utils/kmc/bin/kmc_tools -t1 simple ./indexes/kmc_noncan/{wildcards.index1}_k31 ./indexes/kmc_noncan/{wildcards.index2}_k31 intersect output/raminter/kmc_noncan/{wildcards.index1}:{wildcards.index2} ) 2>> {output.res}; done"
+
+rule inter_swiss_ram:
+    input:
+        swiss1 = "indexes/swiss/{index1}.mp",
+        swiss2 = "indexes/swiss/{index2}.mp"
+    output:
+        out = "output/inter/swiss/{index1}:{index2}.mp",
+        res = "results/inter/swiss/{index1}:{index2}.txt"
+    shell:
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/ST/insect/target/release/insect -o {output.out} -i {input.skl1} -j {input.skl2} ) 2>> {output.res}; done"
