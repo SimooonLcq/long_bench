@@ -1783,4 +1783,4 @@ rule inter_swiss_ram:
         out = "output/raminter/swiss/{index1}:{index2}.mp",
         res = "results/raminter/swiss/{index1}:{index2}.txt"
     shell:
-        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/ST/insect/target/release/insect -o {output.out} -i {input.skl1} -j {input.skl2} ) 2>> {output.res}; done"
+        "for loop in {{0..9}}; do ( /usr/bin/time -v ./bench/ST/insect/target/release/insect -o {output.out} -i {input.swiss1} -j {input.swiss2} ) 2>> {output.res}; done"
